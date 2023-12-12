@@ -9,6 +9,37 @@ red - #ee5253
 */
 
 body {
+  margin: 0;
   background-image: url("./images/burger-friends.jpg");
   background-size: 1500px 1000px;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #0fb9b1;
+  padding: 20px 10px;
+}
+
+.header a {
+  padding: 5px;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.header img.logo {
+  max-width: 5%;
+  max-height: 5%;
+}
+
+.header a:hover {
+  background-color: gold;
+  color: black;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.header-right {
+  float: right;
 }
