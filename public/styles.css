@@ -44,10 +44,21 @@ body {
 }
 
 .header-right {
-  /* display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  align-content: center; */
   float: right;
+}
+
+.boxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 120px;
+  transform: translateY(20%) translateX(-3%);
+}
+
+.boxes > div {
+  background-color: rgba(225, 225, 225, 0.9);
+  margin: 10px;
+  font-size: 30px;
+  height: 450px;
+  width: 500px;
 }

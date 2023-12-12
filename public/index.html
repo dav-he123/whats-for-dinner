@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="header">
-      <a href="www.yahoo.com"
+      <a href="#default"
         ><img src="./images/cookpot.svg" alt="Company Logo"
       /></a>
 
@@ -19,6 +19,44 @@
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
       </div>
+    </div>
+
+    <div class="boxes">
+      <div>
+        <form>
+          <p>What are you looking for?</p>
+          <input
+            type="radio"
+            id="side"
+            name="full_course_meal_type"
+            value="Side"
+          />
+          <label for="side">Side</label><br />
+          <input
+            type="radio"
+            id="maindish"
+            name="full_course_meal_type"
+            value="Main Dish"
+          />
+          <label for="maindish">Main Dish</label><br />
+          <input
+            type="radio"
+            id="dessert"
+            name="full_course_meal_type"
+            value="Dessert"
+          />
+          <label for="dessert">Dessert</label><br />
+          <input
+            type="radio"
+            id="entiremeal"
+            name="full_course_meal_type"
+            value="Entire Meal"
+          />
+          <label for="entire meal">Entire Meal</label><br />
+          <input type="submit" value="Let's Cook" />
+        </form>
+      </div>
+      <div></div>
     </div>
 
     <!-- Page-specific (main) content here -->
