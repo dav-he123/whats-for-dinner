@@ -23,40 +23,54 @@
 
     <div class="boxes">
       <div>
-        <form>
+        <form class="submitform">
           <p>What are you looking for?</p>
-          <input
-            type="radio"
-            id="side"
-            name="full_course_meal_type"
-            value="Side"
-          />
-          <label for="side">Side</label><br />
-          <input
-            type="radio"
-            id="maindish"
-            name="full_course_meal_type"
-            value="Main Dish"
-          />
-          <label for="maindish">Main Dish</label><br />
-          <input
-            type="radio"
-            id="dessert"
-            name="full_course_meal_type"
-            value="Dessert"
-          />
-          <label for="dessert">Dessert</label><br />
-          <input
-            type="radio"
-            id="entiremeal"
-            name="full_course_meal_type"
-            value="Entire Meal"
-          />
-          <label for="entire meal">Entire Meal</label><br />
-          <input type="submit" value="Let's Cook" />
+          <div>
+            <input
+              type="radio"
+              id="side"
+              name="full_course_meal_type"
+              value="Side"
+            />
+            <label for="side">Side</label><br />
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="maindish"
+              name="full_course_meal_type"
+              value="Main Dish"
+            />
+            <label for="maindish">Main Dish</label><br />
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="dessert"
+              name="full_course_meal_type"
+              value="Dessert"
+            />
+            <label for="dessert">Dessert</label><br />
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="entiremeal"
+              name="full_course_meal_type"
+              value="Entire Meal"
+            />
+            <label for="entire meal">Entire Meal</label><br />
+          </div>
+          <div class="letscookbtn">
+            <input type="submit" value="Let's Cook" />
+          </div>
         </form>
       </div>
-      <div></div>
+      <div class="boxmealdish">
+        <a href="#default"
+          ><img src="./images/meal-dish.png" alt="Meal Logo"
+        /></a>
+      </div>
     </div>
 
     <!-- Page-specific (main) content here -->

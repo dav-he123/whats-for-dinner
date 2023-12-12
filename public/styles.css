@@ -62,3 +62,34 @@ body {
   height: 450px;
   width: 500px;
 }
+
+.submitform {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  transform: translateY(21%) translateX(15%);
+}
+
+.submitform div {
+  transform: translateY(-10%);
+}
+
+.submitform .letscookbtn input {
+  transform: translateY(65%);
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #0fb9b1;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 32px;
+  width: 170px;
+}
+
+.submitform .letscookbtn input:hover {
+  background-color: #009092;
+}
+
+.boxmealdish img {
+  transform: translateY(40%) translateX(12%);
+  height: 219px;
+  width: 417px;
+}
