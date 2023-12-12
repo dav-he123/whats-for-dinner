@@ -15,22 +15,25 @@ body {
 }
 
 .header {
-  overflow: hidden;
   background-color: #0fb9b1;
-  padding: 20px 10px;
+  height: 25px;
+  padding: 30px 30px;
 }
 
 .header a {
+  text-align: center;
   padding: 5px;
+  text-decoration: none;
   font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
-  text-align: center;
 }
 
-.header img.logo {
-  max-width: 5%;
-  max-height: 5%;
+.header img {
+  float: left;
+  transform: translateY(-20%);
+  width: 70px;
+  height: 70px;
 }
 
 .header a:hover {
@@ -41,5 +44,10 @@ body {
 }
 
 .header-right {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center; */
   float: right;
 }
