@@ -74,7 +74,7 @@ body {
   transform: translateY(-10%);
 }
 
-.submitform .letscookbtn input {
+.submitform .buttonLetsCook {
   transform: translateY(65%);
   font-size: 16px;
   border-radius: 8px;
@@ -84,7 +84,7 @@ body {
   width: 170px;
 }
 
-.submitform .letscookbtn input:hover {
+.submitform .buttonLetsCook:hover {
   background-color: #009092;
 }
 

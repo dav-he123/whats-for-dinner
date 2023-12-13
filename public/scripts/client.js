@@ -3,3 +3,9 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
+
+$(document).ready(function () {
+  $(".buttonLetsCook").click(function () {
+    console.log("DAVID HE");
+  });
+});
