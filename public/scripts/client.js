@@ -58,8 +58,6 @@ $(document).ready(function () {
   $(".buttonLetsCook").on("click", function () {
     const selectedRadioBtn = $("input[type='radio']:checked").val();
 
-    console.log("AAAAA: " + selectedRadioBtn);
-
     $(".meal-dish").remove();
 
     $(".captiondish").empty();
