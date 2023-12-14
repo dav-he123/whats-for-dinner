@@ -97,9 +97,11 @@ body {
 
 .headercaption {
   font-size: 50px;
-  transform: translateY(150%) translateX(12%);
+  transform: translateY(150%) translateX(11%);
 }
 
 .captiondish {
-  transform: translateY(260%) translateX(27%);
+  height: 100px;
+  width: 350px;
+  transform: translateY(100%) translateX(20%);
 }

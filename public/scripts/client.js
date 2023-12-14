@@ -76,15 +76,16 @@ $(document).ready(function () {
       $(".captiondish").append(
         sides[Math.floor(Math.random() * sides.length)] + "!"
       );
-    } else {
+    } else if (selectedRadioBtn == "Entire Meal") {
       $(".captiondish").append(
-        mains[Math.floor(Math.random() * mains.length)] +
-          "with a side of " +
-          sides[Math.floor(Math.random() * sides.length)] +
-          " and " +
-          desserts[Math.floor(Math.random() * desserts.length)] +
-          " for dessert!"
+        `${mains[Math.floor(Math.random() * mains.length)]} with a side of ${
+          sides[Math.floor(Math.random() * sides.length)]
+        } and ${
+          desserts[Math.floor(Math.random() * desserts.length)]
+        } for dessert!`
       );
+    } else {
+      $(".captiondish").append("Please select an option!");
     }
   });
 });
