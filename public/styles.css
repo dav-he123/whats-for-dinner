@@ -89,7 +89,16 @@ body {
 }
 
 .boxmealdish img {
-  transform: translateY(40%) translateX(12%);
+  transform: translateY(50%) translateX(12%);
   height: 219px;
   width: 417px;
+}
+
+.headercaption {
+  font-size: 35;
+  transform: translateY(30%) translateX(3%);
+}
+
+.captiondish {
+  transform: translateY(180%) translateX(25%);
 }
