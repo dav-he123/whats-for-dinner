@@ -58,6 +58,8 @@ $(document).ready(function () {
   $(".buttonLetsCook").on("click", function () {
     const selectedRadioBtn = $("input[type='radio']:checked").val();
 
+    console.log("AAAAA: " + selectedRadioBtn);
+
     $(".meal-dish").remove();
 
     $(".captiondish").empty();
@@ -66,12 +68,25 @@ $(document).ready(function () {
 
     if (selectedRadioBtn == "Dessert") {
       $(".captiondish").append(
-        desserts[Math.floor(Math.random() * desserts.length)]
+        desserts[Math.floor(Math.random() * desserts.length)] + "!"
       );
     } else if (selectedRadioBtn == "Main Dish") {
-      $(".captiondish").append(mains[Math.floor(Math.random() * mains.length)]);
+      $(".captiondish").append(
+        mains[Math.floor(Math.random() * mains.length)] + "!"
+      );
+    } else if (selectedRadioBtn == "Side") {
+      $(".captiondish").append(
+        sides[Math.floor(Math.random() * sides.length)] + "!"
+      );
     } else {
-      $(".captiondish").append(sides[Math.floor(Math.random() * sides.length)]);
+      $(".captiondish").append(
+        mains[Math.floor(Math.random() * mains.length)] +
+          "with a side of " +
+          sides[Math.floor(Math.random() * sides.length)] +
+          " and " +
+          desserts[Math.floor(Math.random() * desserts.length)] +
+          " for dessert!"
+      );
     }
   });
 });

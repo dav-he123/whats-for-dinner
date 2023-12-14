@@ -12,6 +12,7 @@ body {
   margin: 0;
   background-image: url("./images/burger-friends.jpg");
   background-size: 1500px 1000px;
+  /* font-family: "Roboto", sans-serif; */
 }
 
 .header {
@@ -95,10 +96,10 @@ body {
 }
 
 .headercaption {
-  font-size: 35;
-  transform: translateY(30%) translateX(3%);
+  font-size: 50px;
+  transform: translateY(150%) translateX(12%);
 }
 
 .captiondish {
-  transform: translateY(180%) translateX(25%);
+  transform: translateY(260%) translateX(27%);
 }
