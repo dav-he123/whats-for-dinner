@@ -68,12 +68,14 @@
         </form>
       </div>
       <div class="boxmealdish">
-        <img class="meal-dish" src="./images/meal-dish.png" alt="Meal Logo" />
+        <div class="meal-dish">
+          <img src="./images/meal-dish.png" alt="Meal Logo" />
+        </div>
         <h1 class="headercaption"></h1>
         <p class="captiondish"></p>
-        <button class="buttonclear" type="button">Clear</button>
       </div>
     </div>
+    <button class="buttonclear" type="button">Clear</button>
 
     <!-- Page-specific (main) content here -->
     <main class="container"></main>
@@ -83,7 +85,9 @@
         <input type="text" id="inputtype" name="inputtype" />
         <label for="inputname">Recipe Name: </label>
         <input type="text" id="inputname" name="inputname" />
-        <button class="buttonaddnewrecipe" type="button">Click Me!</button>
+        <button class="buttonaddnewrecipe" type="button">
+          Add New Recipe!
+        </button>
       </div>
     </footer>
   </body>

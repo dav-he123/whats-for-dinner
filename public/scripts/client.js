@@ -58,7 +58,7 @@ $(document).ready(function () {
   $(".buttonLetsCook").on("click", function () {
     const selectedRadioBtn = $("input[type='radio']:checked").val();
 
-    $(".meal-dish").remove();
+    $(".meal-dish").empty();
 
     $(".captiondish").empty();
     $(".headercaption").empty();
@@ -97,7 +97,7 @@ $(document).ready(function () {
     const inputType = $("#inputtype").val();
     const inputName = $("#inputname").val();
 
-    $(".meal-dish").remove();
+    $(".meal-dish").empty();
     $(".captiondish").empty();
     $(".headercaption").empty();
 
@@ -119,5 +119,16 @@ $(document).ready(function () {
 
     $("#inputname").val("");
     $("#inputtype").val("");
+  });
+
+  $(".buttonclear").on("click", function () {
+    $(".captiondish").empty();
+    $(".headercaption").empty();
+
+    $(".meal-dish").empty();
+
+    $(".meal-dish").append(
+      '<img src="./images/meal-dish.png" alt="Meal Logo" />'
+    );
   });
 });

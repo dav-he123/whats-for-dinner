@@ -65,6 +65,7 @@ body {
 .boxes > div {
   background-color: rgba(225, 225, 225, 0.9);
   margin: 10px;
+  border-radius: 8px;
   font-size: 30px;
   height: 450px;
   width: 500px;
@@ -113,8 +114,8 @@ body {
 }
 
 .buttonclear {
-  float: right;
-  transform: translateX(-50%);
+  float: bottom;
+  transform: translateX(1180px);
   font-size: 16px;
   border-radius: 8px;
   background-color: #0fb9b1;
