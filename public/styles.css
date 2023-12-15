@@ -44,6 +44,12 @@ body {
   padding: 5px;
 }
 
+.addrecipe {
+  background-color: gold;
+  border-radius: 15px;
+  transform: translateX(-10%);
+}
+
 .header-right {
   float: right;
 }
@@ -97,11 +103,50 @@ body {
 
 .headercaption {
   font-size: 50px;
-  transform: translateY(150%) translateX(11%);
+  transform: translateY(100%) translateX(11%);
 }
 
 .captiondish {
   height: 100px;
   width: 350px;
-  transform: translateY(100%) translateX(20%);
+  transform: translateY(60%) translateX(20%);
+}
+
+.buttonclear {
+  float: right;
+  transform: translateX(-50%);
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #0fb9b1;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 32px;
+  width: 80px;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 65px;
+  width: 100%;
+  background-color: rgba(225, 225, 225, 0.9);
+  color: white;
+  text-align: center;
+  display: none;
+}
+
+.footer .recipefooter {
+  display: flex;
+  justify-content: flex-start;
+  transform: translateY(100%);
+}
+
+.recipefooter label {
+  color: black;
+}
+
+.addnewrecipe {
+  background-color: #0fb9b1;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 8px;
 }

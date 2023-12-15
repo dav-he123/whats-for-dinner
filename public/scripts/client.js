@@ -88,4 +88,42 @@ $(document).ready(function () {
       $(".captiondish").append("Please select an option!");
     }
   });
+
+  $(".addrecipe").click(function () {
+    $(".footer").toggle();
+  });
+
+  $(".buttonaddnewrecipe").on("click", function () {
+    const inputType = $("#inputtype").val();
+    const inputName = $("#inputname").val();
+
+    $(".meal-dish").remove();
+
+    if (inputType.toLowerCase() == "side") {
+      sides.push(inputName);
+      $(".captiondish").empty();
+      $(".headercaption").empty();
+      $(".headercaption").append("New side recipe: ");
+      $(".captiondish").append(inputName);
+    } else if (inputType.toLowerCase() == "main dish") {
+      mains.push(inputName);
+      $(".captiondish").empty();
+      $(".headercaption").empty();
+      $(".headercaption").append("New main dish recipe: ");
+      $(".captiondish").append(inputName);
+    } else if (inputType.toLowerCase() == "dessert") {
+      desserts.push(inputName);
+      $(".captiondish").empty();
+      $(".headercaption").empty();
+      $(".headercaption").append("New dessert recipe: ");
+      $(".captiondish").append(inputName);
+    } else {
+      $(".captiondish").empty();
+      $(".headercaption").empty();
+      $(".headercaption").append("Recipe type doesn't exist! Pls try again!");
+    }
+
+    $("#inputname").val("");
+    $("#inputtype").val("");
+  });
 });

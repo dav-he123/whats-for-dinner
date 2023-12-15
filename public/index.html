@@ -17,6 +17,7 @@
       /></a>
 
       <div class="header-right">
+        <input class="addrecipe" type="button" value="Add Recipe" />
         <a class="active" href="#home">Home</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
@@ -70,10 +71,20 @@
         <img class="meal-dish" src="./images/meal-dish.png" alt="Meal Logo" />
         <h1 class="headercaption"></h1>
         <p class="captiondish"></p>
+        <button class="buttonclear" type="button">Clear</button>
       </div>
     </div>
 
     <!-- Page-specific (main) content here -->
     <main class="container"></main>
+    <footer class="footer">
+      <div class="recipefooter">
+        <label for="inputtype">Recipe Type: </label>
+        <input type="text" id="inputtype" name="inputtype" />
+        <label for="inputname">Recipe Name: </label>
+        <input type="text" id="inputname" name="inputname" />
+        <button class="buttonaddnewrecipe" type="button">Click Me!</button>
+      </div>
+    </footer>
   </body>
 </html>
