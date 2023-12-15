@@ -98,28 +98,22 @@ $(document).ready(function () {
     const inputName = $("#inputname").val();
 
     $(".meal-dish").remove();
+    $(".captiondish").empty();
+    $(".headercaption").empty();
 
     if (inputType.toLowerCase() == "side") {
       sides.push(inputName);
-      $(".captiondish").empty();
-      $(".headercaption").empty();
-      $(".headercaption").append("New side recipe: ");
+      $(".headercaption").append("New side recipe:");
       $(".captiondish").append(inputName);
     } else if (inputType.toLowerCase() == "main dish") {
       mains.push(inputName);
-      $(".captiondish").empty();
-      $(".headercaption").empty();
-      $(".headercaption").append("New main dish recipe: ");
+      $(".headercaption").append("New main recipe:");
       $(".captiondish").append(inputName);
     } else if (inputType.toLowerCase() == "dessert") {
       desserts.push(inputName);
-      $(".captiondish").empty();
-      $(".headercaption").empty();
-      $(".headercaption").append("New dessert recipe: ");
+      $(".headercaption").append("New dessert recipe:");
       $(".captiondish").append(inputName);
     } else {
-      $(".captiondish").empty();
-      $(".headercaption").empty();
       $(".headercaption").append("Recipe type doesn't exist! Pls try again!");
     }
 
