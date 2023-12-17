@@ -151,3 +151,31 @@ body {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 8px;
 }
+
+#star {
+  /* position: absolute; */
+  /* display: block; */
+  padding: 0px 10px 0px;
+  /* border: black; */
+  fill: #1e1a1a1a;
+  transition: fill 200ms;
+  /* z-index: 1; */
+}
+
+#star:hover {
+  fill: #009092;
+}
+
+#star.active {
+  fill: #ffa600;
+  animation: fav 600ms ease;
+}
+
+/* @keyframes fav {
+  70% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+} */

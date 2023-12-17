@@ -55,7 +55,11 @@ let desserts = [
 ];
 
 $(document).ready(function () {
+  $("#star").hide();
+
   $(".buttonLetsCook").on("click", function () {
+    $("#star").show();
+
     const selectedRadioBtn = $("input[type='radio']:checked").val();
 
     $(".meal-dish").empty();
@@ -65,9 +69,10 @@ $(document).ready(function () {
     $(".headercaption").append("You should make: ");
 
     if (selectedRadioBtn == "Dessert") {
-      $(".captiondish").append(
-        desserts[Math.floor(Math.random() * desserts.length)] + "!"
-      );
+      const dessertSelection =
+        desserts[Math.floor(Math.random() * desserts.length)];
+
+      $(".captiondish").append(dessertSelection + "!");
     } else if (selectedRadioBtn == "Main Dish") {
       $(".captiondish").append(
         mains[Math.floor(Math.random() * mains.length)] + "!"
@@ -85,7 +90,9 @@ $(document).ready(function () {
         } for dessert!`
       );
     } else {
-      $(".captiondish").append("Please select an option!");
+      $(".headercaption").empty();
+      $(".headercaption").append("Whoops!");
+      $(".captiondish").append("Please select an option before proceeding!");
     }
   });
 
@@ -122,6 +129,8 @@ $(document).ready(function () {
   });
 
   $(".buttonclear").on("click", function () {
+    $("#star").hide();
+
     $(".captiondish").empty();
     $(".headercaption").empty();
 
@@ -130,5 +139,13 @@ $(document).ready(function () {
     $(".meal-dish").append(
       '<img src="./images/meal-dish.png" alt="Meal Logo" />'
     );
+  });
+
+  $("#star").on("click", function () {
+    if (this.className == "active") {
+      this.className = "";
+    } else {
+      this.className = "active";
+    }
   });
 });
