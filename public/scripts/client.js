@@ -54,11 +54,17 @@ let desserts = [
   "Eclairs",
 ];
 
+let favourites = [];
+
 $(document).ready(function () {
   $("#star").hide();
 
+  let favouriteSelections = "";
+
   $(".buttonLetsCook").on("click", function () {
     $("#star").show();
+
+    star.className = "";
 
     const selectedRadioBtn = $("input[type='radio']:checked").val();
 
@@ -69,26 +75,28 @@ $(document).ready(function () {
     $(".headercaption").append("You should make: ");
 
     if (selectedRadioBtn == "Dessert") {
-      const dessertSelection =
+      favouriteSelections =
         desserts[Math.floor(Math.random() * desserts.length)];
 
-      $(".captiondish").append(dessertSelection + "!");
+      $(".captiondish").append(favouriteSelections + "!");
     } else if (selectedRadioBtn == "Main Dish") {
-      $(".captiondish").append(
-        mains[Math.floor(Math.random() * mains.length)] + "!"
-      );
+      favouriteSelections = mains[Math.floor(Math.random() * mains.length)];
+
+      $(".captiondish").append(favouriteSelections + "!");
     } else if (selectedRadioBtn == "Side") {
-      $(".captiondish").append(
-        sides[Math.floor(Math.random() * sides.length)] + "!"
-      );
+      favouriteSelections = sides[Math.floor(Math.random() * sides.length)];
+
+      $(".captiondish").append(favouriteSelections + "!");
     } else if (selectedRadioBtn == "Entire Meal") {
-      $(".captiondish").append(
-        `${mains[Math.floor(Math.random() * mains.length)]} with a side of ${
-          sides[Math.floor(Math.random() * sides.length)]
-        } and ${
-          desserts[Math.floor(Math.random() * desserts.length)]
-        } for dessert!`
-      );
+      favouriteSelections =
+        mains[Math.floor(Math.random() * mains.length)] +
+        " with a side of " +
+        sides[Math.floor(Math.random() * sides.length)] +
+        " and " +
+        desserts[Math.floor(Math.random() * desserts.length)] +
+        " for dessert";
+
+      $(".captiondish").append(favouriteSelections + "!");
     } else {
       $(".headercaption").empty();
       $(".headercaption").append("Whoops!");
@@ -139,13 +147,30 @@ $(document).ready(function () {
     $(".meal-dish").append(
       '<img src="./images/meal-dish.png" alt="Meal Logo" />'
     );
+
+    console.log("FINAL FAV: " + favourites);
+
+    favourites = [];
+    if (star.className == "active") {
+      star.className = "";
+    }
+    console.log("FINAL ARRAY: " + favourites);
   });
 
   $("#star").on("click", function () {
+    console.log("FAV: " + favouriteSelections);
+
     if (this.className == "active") {
       this.className = "";
+      if (favourites.includes(favouriteSelections)) {
+        this.className = "";
+      }
     } else {
       this.className = "active";
+      if (!favourites.includes(favouriteSelections)) {
+        favourites.push(favouriteSelections);
+      }
     }
+    console.log(favourites);
   });
 });
