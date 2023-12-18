@@ -96,9 +96,16 @@ $(document).ready(function () {
 
       $(".captiondish").append(favouriteSelections + "!");
     } else {
+      $("#star").hide();
       $(".headercaption").empty();
       $(".headercaption").append("Whoops!");
       $(".captiondish").append("Please select an option before proceeding!");
+    }
+
+    if (favourites.includes(favouriteSelections)) {
+      star.className = "active";
+    } else {
+      star.className = "";
     }
   });
 
