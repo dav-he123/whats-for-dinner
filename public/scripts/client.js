@@ -64,8 +64,6 @@ $(document).ready(function () {
   $(".buttonLetsCook").on("click", function () {
     $("#star").show();
 
-    star.className = "";
-
     const selectedRadioBtn = $("input[type='radio']:checked").val();
 
     $(".meal-dish").empty();
@@ -151,19 +149,25 @@ $(document).ready(function () {
     console.log("FINAL FAV: " + favourites);
 
     favourites = [];
+
     if (star.className == "active") {
       star.className = "";
     }
+
     console.log("FINAL ARRAY: " + favourites);
   });
 
   $("#star").on("click", function () {
     console.log("FAV: " + favouriteSelections);
 
+    // console.log(test(1));
+
     if (this.className == "active") {
       this.className = "";
-      if (favourites.includes(favouriteSelections)) {
-        this.className = "";
+      const index = favourites.indexOf(favouriteSelections);
+      if (index > -1) {
+        // only splice array when item is found
+        favourites.splice(index, 1); // 2nd parameter means remove one item only
       }
     } else {
       this.className = "active";
