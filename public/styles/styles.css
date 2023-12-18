@@ -10,7 +10,7 @@ red - #ee5253
 
 body {
   margin: 0;
-  background-image: url("./images/burger-friends.jpg");
+  background-image: url("../images/burger-friends.jpg");
   background-size: 1500px 1000px;
   /* font-family: "Roboto", sans-serif; */
 }
@@ -179,3 +179,12 @@ body {
     transform: scale(1);
   }
 } */
+
+.favourtiesboxes > div {
+  background-color: rgba(225, 225, 225, 0.9);
+  margin: 10px;
+  border-radius: 8px;
+  font-size: 30px;
+  height: 450px;
+  width: 500px;
+}

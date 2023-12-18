@@ -150,7 +150,7 @@ $(document).ready(function () {
     $(".meal-dish").empty();
 
     $(".meal-dish").append(
-      '<img src="./images/meal-dish.png" alt="Meal Logo" />'
+      '<img src="../images/meal-dish.png" alt="Meal Logo" />'
     );
 
     console.log("FINAL FAV: " + favourites);
