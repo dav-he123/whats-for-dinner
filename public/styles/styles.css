@@ -180,7 +180,7 @@ body {
   }
 } */
 
-.favourtiesboxes > div {
+.favouritesboxes {
   background-color: rgba(225, 225, 225, 0.9);
   margin: 10px;
   border-radius: 8px;

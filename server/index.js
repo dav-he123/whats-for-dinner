@@ -12,11 +12,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/favourites", (req, res) => {
-  res.render("favourites", { title: "Express" });
+  res.render("favourites");
 });
 
 app.get("/main", (req, res) => {
-  res.render("main", { title: "Express" });
+  res.render("main");
 });
 
 app.listen(PORT, () => {

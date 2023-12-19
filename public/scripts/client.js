@@ -153,22 +153,14 @@ $(document).ready(function () {
       '<img src="../images/meal-dish.png" alt="Meal Logo" />'
     );
 
-    console.log("FINAL FAV: " + favourites);
-
     favourites = [];
 
     if (star.className == "active") {
       star.className = "";
     }
-
-    console.log("FINAL ARRAY: " + favourites);
   });
 
   $("#star").on("click", function () {
-    console.log("FAV: " + favouriteSelections);
-
-    // console.log(test(1));
-
     if (this.className == "active") {
       this.className = "";
       const index = favourites.indexOf(favouriteSelections);
@@ -182,6 +174,5 @@ $(document).ready(function () {
         favourites.push(favouriteSelections);
       }
     }
-    console.log(favourites);
   });
 });
