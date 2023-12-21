@@ -188,3 +188,8 @@ body {
   height: 450px;
   width: 500px;
 }
+
+#favrecipesdisplay {
+  font-size: 50px;
+  color: red;
+}

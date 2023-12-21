@@ -6,9 +6,9 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
-    <script type="text/javascript" src="/scripts/client.js"></script>
+    <!-- <script type="text/javascript" src="/scripts/client.js"></script> -->
   </head>
   <body>
     <div class="header">
@@ -21,14 +21,17 @@
         <a class="active" href="#home">Home</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
-        <a href="/favourites">Favourites</a>
+        <a href="/favrecipes">Favourites</a>
       </div>
     </div>
 
     <div class="boxes">
       <div>
-        <form class="submitform">
+        <form class="submitform" action="/home/randomselection" method="POST">
           <p>What are you looking for?</p>
+
+          <% if(category == "") { %>
+
           <div>
             <input
               type="radio"
@@ -38,6 +41,7 @@
             />
             <label for="side">Side</label><br />
           </div>
+
           <div>
             <input
               type="radio"
@@ -47,6 +51,7 @@
             />
             <label for="maindish">Main Dish</label><br />
           </div>
+
           <div>
             <input
               type="radio"
@@ -56,6 +61,7 @@
             />
             <label for="dessert">Dessert</label><br />
           </div>
+
           <div>
             <input
               type="radio"
@@ -63,32 +69,260 @@
               name="full_course_meal_type"
               value="Entire Meal"
             />
-            <label for="entire meal">Entire Meal</label><br />
+            <label for="entiremeal">Entire Meal</label><br />
           </div>
-          <input class="buttonLetsCook" type="button" value="Let's Cook" />
+
+          <% } else if(category == "Side") { %>
+
+          <div>
+            <input
+              type="radio"
+              id="side"
+              name="full_course_meal_type"
+              value="Side"
+              checked
+            />
+            <label for="side">Side</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="maindish"
+              name="full_course_meal_type"
+              value="Main Dish"
+            />
+            <label for="maindish">Main Dish</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="dessert"
+              name="full_course_meal_type"
+              value="Dessert"
+            />
+            <label for="dessert">Dessert</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="entiremeal"
+              name="full_course_meal_type"
+              value="Entire Meal"
+            />
+            <label for="entiremeal">Entire Meal</label><br />
+          </div>
+
+          <% } else if(category == "Main Dish") { %>
+
+          <div>
+            <input
+              type="radio"
+              id="side"
+              name="full_course_meal_type"
+              value="Side"
+            />
+            <label for="side">Side</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="maindish"
+              name="full_course_meal_type"
+              value="Main Dish"
+              checked
+            />
+            <label for="maindish">Main Dish</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="dessert"
+              name="full_course_meal_type"
+              value="Dessert"
+            />
+            <label for="dessert">Dessert</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="entiremeal"
+              name="full_course_meal_type"
+              value="Entire Meal"
+            />
+            <label for="entiremeal">Entire Meal</label><br />
+          </div>
+
+          <% } else if(category == "Dessert") { %>
+
+          <div>
+            <input
+              type="radio"
+              id="side"
+              name="full_course_meal_type"
+              value="Side"
+            />
+            <label for="side">Side</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="maindish"
+              name="full_course_meal_type"
+              value="Main Dish"
+            />
+            <label for="maindish">Main Dish</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="dessert"
+              name="full_course_meal_type"
+              value="Dessert"
+              checked
+            />
+            <label for="dessert">Dessert</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="entiremeal"
+              name="full_course_meal_type"
+              value="Entire Meal"
+            />
+            <label for="entiremeal">Entire Meal</label><br />
+          </div>
+
+          <% } else if (category == "Entire Meal") { %>
+
+          <div>
+            <input
+              type="radio"
+              id="side"
+              name="full_course_meal_type"
+              value="Side"
+            />
+            <label for="side">Side</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="maindish"
+              name="full_course_meal_type"
+              value="Main Dish"
+            />
+            <label for="maindish">Main Dish</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="dessert"
+              name="full_course_meal_type"
+              value="Dessert"
+            />
+            <label for="dessert">Dessert</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="entiremeal"
+              name="full_course_meal_type"
+              value="Entire Meal"
+              checked
+            />
+            <label for="entiremeal">Entire Meal</label><br />
+          </div>
+          <% } else { %>
+
+          <div>
+            <input
+              type="radio"
+              id="side"
+              name="full_course_meal_type"
+              value="Side"
+            />
+            <label for="side">Side</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="maindish"
+              name="full_course_meal_type"
+              value="Main Dish"
+            />
+            <label for="maindish">Main Dish</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="dessert"
+              name="full_course_meal_type"
+              value="Dessert"
+            />
+            <label for="dessert">Dessert</label><br />
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              id="entiremeal"
+              name="full_course_meal_type"
+              value="Entire Meal"
+            />
+            <label for="entiremeal">Entire Meal</label><br />
+          </div>
+
+          <% } %>
+
+          <button class="buttonLetsCook" type="submit">Let's Cook</button>
         </form>
       </div>
       <div class="boxmealdish">
-        <div class="meal-dish">
+        <!-- <div class="meal-dish">
           <img src="/images/cookpot.svg" alt="Meal Logo" />
-        </div>
+        </div> -->
         <h1 class="headercaption"></h1>
-        <p class="captiondish"></p>
 
-        <div id="star">
-          <svg
-            width="42px"
-            height="40px"
-            viewBox="0 0 42 40"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <path
-              d="M21,34 L10.4346982,39.5545079 C8.47875732,40.5828068 7.19697214,39.6450119 7.56952871,37.4728404 L9.5873218,25.7082039 L1.03981311,17.3764421 C-0.542576313,15.8339937 -0.0467737017,14.3251489 2.13421047,14.0082334 L13.946577,12.2917961 L19.2292279,1.58797623 C20.2071983,-0.393608322 21.7954064,-0.388330682 22.7707721,1.58797623 L28.053423,12.2917961 L39.8657895,14.0082334 C42.0525979,14.3259953 42.5383619,15.8381017 40.9601869,17.3764421 L32.4126782,25.7082039 L34.4304713,37.4728404 C34.8040228,39.6508126 33.5160333,40.5800681 31.5653018,39.5545079 L21,34 Z"
-            ></path>
-          </svg>
-        </div>
+        <p class="captiondish"><%= meal %></p>
+
+        <form action="/favrecipes/addfavrecipe" method="POST">
+          <label for="longFAV">Enter a FAV:</label>
+          <input
+            class="form-control"
+            type="text"
+            name="longFAV"
+            placeholder="type here"
+            style="width: 300px; margin: 1em"
+          />
+
+          <button type="submit" id="star">
+            <svg
+              width="42px"
+              height="40px"
+              viewBox="0 0 42 40"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <path
+                d="M21,34 L10.4346982,39.5545079 C8.47875732,40.5828068 7.19697214,39.6450119 7.56952871,37.4728404 L9.5873218,25.7082039 L1.03981311,17.3764421 C-0.542576313,15.8339937 -0.0467737017,14.3251489 2.13421047,14.0082334 L13.946577,12.2917961 L19.2292279,1.58797623 C20.2071983,-0.393608322 21.7954064,-0.388330682 22.7707721,1.58797623 L28.053423,12.2917961 L39.8657895,14.0082334 C42.0525979,14.3259953 42.5383619,15.8381017 40.9601869,17.3764421 L32.4126782,25.7082039 L34.4304713,37.4728404 C34.8040228,39.6508126 33.5160333,40.5800681 31.5653018,39.5545079 L21,34 Z"
+              ></path>
+            </svg>
+          </button>
+        </form>
       </div>
     </div>
     <button class="buttonclear" type="button">Clear</button>
