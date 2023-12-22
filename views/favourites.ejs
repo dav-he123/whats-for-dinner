@@ -24,7 +24,9 @@
 
     <section>
       <div id="favrecipesdisplay">
-        <p><%= meal %></p>
+        <% for(const element of favrecipe) { %>
+        <p><%= element %></p>
+        <% } %>
       </div>
     </section>
 

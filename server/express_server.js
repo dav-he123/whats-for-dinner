@@ -63,10 +63,12 @@ let desserts = [
 
 let randMeals = { meal: "", category: "" };
 
-let favrecipe = {};
+let favrecipe = [];
 
 app.get("/favrecipes", (req, res) => {
-  res.render("favourites", favrecipe);
+  console.log("AAABBB: " + favrecipe);
+
+  res.render("favourites", { favrecipe: favrecipe });
 });
 
 app.get("/home", (req, res) => {
@@ -80,7 +82,7 @@ app.post("/home/randomselection", (req, res) => {
 });
 
 app.post("/home/addfavrecipe", (req, res) => {
-  favrecipe["meal"] = randMeals["meal"];
+  favrecipe.push(randMeals["meal"]);
 
   res.redirect("/home");
 });
