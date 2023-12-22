@@ -294,20 +294,10 @@
         <!-- <div class="meal-dish">
           <img src="/images/cookpot.svg" alt="Meal Logo" />
         </div> -->
-        <h1 class="headercaption"></h1>
-
+        <h1 class="headercaption">What's for dinner?</h1>
         <p class="captiondish"><%= meal %></p>
 
-        <form action="/favrecipes/addfavrecipe" method="POST">
-          <label for="longFAV">Enter a FAV:</label>
-          <input
-            class="form-control"
-            type="text"
-            name="longFAV"
-            placeholder="type here"
-            style="width: 300px; margin: 1em"
-          />
-
+        <form action="/home/addfavrecipe" method="POST">
           <button type="submit" id="star">
             <svg
               width="42px"

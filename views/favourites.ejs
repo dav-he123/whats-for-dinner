@@ -7,8 +7,6 @@
       rel="stylesheet"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <script type="text/javascript" src="/scripts/client.js"></script>
   </head>
   <body>
     <div class="header">
@@ -26,11 +24,7 @@
 
     <section>
       <div id="favrecipesdisplay">
-        <ul>
-          <% for(var i = 0; i < fav.length; i++){ %>
-          <p><%= fav[i] %></p>
-          <% } %>
-        </ul>
+        <p><%= meal %></p>
       </div>
     </section>
 

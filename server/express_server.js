@@ -61,30 +61,28 @@ let desserts = [
   "Eclairs",
 ];
 
-let fav = ["Chicken", "Mashed Potatoes"];
-
 let randMeals = { meal: "", category: "" };
 
+let favrecipe = {};
+
 app.get("/favrecipes", (req, res) => {
-  res.render("favourites", { fav: fav });
+  res.render("favourites", favrecipe);
 });
 
 app.get("/home", (req, res) => {
-  console.log(randMeals);
-
   res.render("main", randMeals);
 });
 
 app.post("/home/randomselection", (req, res) => {
-  console.log(req.body);
   randMeals["category"] = req.body.full_course_meal_type;
   randMeals["meal"] = randSelect(req.body.full_course_meal_type);
   res.redirect("/home");
 });
 
-app.post("/favrecipes/addfavrecipe", (req, res) => {
-  console.log("YOLO1");
-  console.log(req);
+app.post("/home/addfavrecipe", (req, res) => {
+  favrecipe["meal"] = randMeals["meal"];
+
+  res.redirect("/home");
 });
 
 app.listen(PORT, () => {
