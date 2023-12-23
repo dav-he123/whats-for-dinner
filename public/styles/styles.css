@@ -155,11 +155,17 @@ body {
 #star {
   /* position: absolute; */
   /* display: block; */
+  /* height: 30px; */
+  /* width: 30px; */
   padding: 0px 10px 0px;
   /* border: black; */
   fill: #1e1a1a1a;
   transition: fill 200ms;
   /* z-index: 1; */
+}
+
+form.addfavrecipeform input[type="submit"] {
+  display: none;
 }
 
 #star:hover {

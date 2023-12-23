@@ -6,6 +6,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
     <div class="header">
@@ -15,7 +16,7 @@
 
       <div class="header-right">
         <input class="addrecipe" type="button" value="Add Recipe" />
-        <a class="active" href="#home">Home</a>
+        <a class="active" href="/home">Home</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
         <a href="/favrecipes">Favourites</a>
@@ -294,22 +295,40 @@
         <h1 class="headercaption">What's for dinner?</h1>
         <p class="captiondish"><%= meal %></p>
 
-        <form action="/home/addfavrecipe" method="POST">
-          <button type="submit" id="star">
-            <svg
-              width="42px"
-              height="40px"
-              viewBox="0 0 42 40"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <path
+        <form
+          class="addfavrecipeform"
+          action="/home/addfavrecipe"
+          method="POST"
+        >
+          <div id="star">
+            <label>
+              <input type="submit" />
+                <svg
+                width="50px"
+                height="48px"
+                viewBox="0 0 50 48"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                <path
                 d="M21,34 L10.4346982,39.5545079 C8.47875732,40.5828068 7.19697214,39.6450119 7.56952871,37.4728404 L9.5873218,25.7082039 L1.03981311,17.3764421 C-0.542576313,15.8339937 -0.0467737017,14.3251489 2.13421047,14.0082334 L13.946577,12.2917961 L19.2292279,1.58797623 C20.2071983,-0.393608322 21.7954064,-0.388330682 22.7707721,1.58797623 L28.053423,12.2917961 L39.8657895,14.0082334 C42.0525979,14.3259953 42.5383619,15.8381017 40.9601869,17.3764421 L32.4126782,25.7082039 L34.4304713,37.4728404 C34.8040228,39.6508126 33.5160333,40.5800681 31.5653018,39.5545079 L21,34 Z"
-              ></path>
-            </svg>
-          </button>
+                ></path>
+              </svg>
+            </label>
+          </div>
         </form>
+        <script>
+          var star = document.getElementById("star");
+
+          $("#star").on("click", function () {
+              if (star.className == "active") {
+                star.className = "";
+              } else {
+                star.className = "active";
+              }
+          });
+        </script>
       </div>
     </div>
     <button class="buttonclear" type="button">Clear</button>

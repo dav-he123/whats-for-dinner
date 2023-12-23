@@ -66,8 +66,6 @@ let randMeals = { meal: "", category: "" };
 let favrecipe = [];
 
 app.get("/favrecipes", (req, res) => {
-  console.log("AAABBB: " + favrecipe);
-
   res.render("favourites", { favrecipe: favrecipe });
 });
 
@@ -82,8 +80,9 @@ app.post("/home/randomselection", (req, res) => {
 });
 
 app.post("/home/addfavrecipe", (req, res) => {
-  favrecipe.push(randMeals["meal"]);
-
+  if (!favrecipe.includes(randMeals["meal"])) {
+    favrecipe.push(randMeals["meal"]);
+  }
   res.redirect("/home");
 });
 
