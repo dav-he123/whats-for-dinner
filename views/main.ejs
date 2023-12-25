@@ -300,7 +300,7 @@
           action="/home/addfavrecipe"
           method="POST"
         >
-          <div id="star">
+          <div id="star" onclick="favouriteClick()">
             <label>
               <input type="submit" />
                 <svg
@@ -319,15 +319,13 @@
           </div>
         </form>
         <script>
-          var star = document.getElementById("star");
-
-          $("#star").on("click", function () {
+          function favouriteClick() {
               if (star.className == "active") {
                 star.className = "";
               } else {
                 star.className = "active";
               }
-          });
+          }
         </script>
       </div>
     </div>

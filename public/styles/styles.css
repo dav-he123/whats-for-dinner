@@ -177,15 +177,6 @@ form.addfavrecipeform input[type="submit"] {
   animation: fav 600ms ease;
 }
 
-/* @keyframes fav {
-  70% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-} */
-
 .favouritesboxes {
   background-color: rgba(225, 225, 225, 0.9);
   margin: 10px;
