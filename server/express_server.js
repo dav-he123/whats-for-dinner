@@ -70,6 +70,7 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
+  console.log(randMeals);
   res.render("main", randMeals);
 });
 
@@ -83,6 +84,12 @@ app.post("/home/addfavrecipe", (req, res) => {
   if (!favrecipe.includes(randMeals["meal"])) {
     favrecipe.push(randMeals["meal"]);
   }
+  res.redirect("/home");
+});
+
+app.post("/home/clearfavrecipe", (req, res) => {
+  randMeals["meal"] = "";
+  randMeals["category"] = "";
   res.redirect("/home");
 });
 
@@ -110,6 +117,5 @@ const randSelect = function (mealtype) {
   } else {
     selectedMeal = "Please select an option before proceeding!";
   }
-
   return selectedMeal;
 };
