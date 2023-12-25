@@ -70,7 +70,6 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  console.log(randMeals);
   res.render("main", randMeals);
 });
 
@@ -90,6 +89,18 @@ app.post("/home/addfavrecipe", (req, res) => {
 app.post("/home/clearfavrecipe", (req, res) => {
   randMeals["meal"] = "";
   randMeals["category"] = "";
+  res.redirect("/home");
+});
+
+app.post("/home/addnewrecipe", (req, res) => {
+  if(req.body.inputtype == "Side") {
+    sides.push(req.body.inputname);
+  } else if(req.body.inputtype == "Main Dish") {
+    mains.push(req.body.inputname);
+  } else {
+    desserts.push(req.body.inputname);
+  }
+
   res.redirect("/home");
 });
 

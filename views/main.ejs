@@ -355,13 +355,19 @@
     <main class="container"></main>
     <footer class="footer">
       <div class="recipefooter">
+        <form action="/home/addnewrecipe" method="POST">
         <label for="inputtype">Recipe Type: </label>
-        <input type="text" id="inputtype" name="inputtype" />
+        <select name="inputtype" id="meals">
+          <option value="Side">Side</option>
+          <option value="Main Dish">Main Dish</option>
+          <option value="Dessert">Dessert</option>
+        </select>
         <label for="inputname">Recipe Name: </label>
-        <input type="text" id="inputname" name="inputname" />
-        <button class="buttonaddnewrecipe" type="button">
-          Add New Recipe!
-        </button>
+        <input type="text" class="recipename" name="inputname" />
+          <button class="buttonaddnewrecipe" type="submit">
+            Add New Recipe!
+          </button>
+        </form>
       </div>
     </footer>
   </body>
