@@ -70,6 +70,7 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
+  console.log(randMeals)
   res.render("main", randMeals);
 });
 
@@ -100,7 +101,6 @@ app.post("/home/addnewrecipe", (req, res) => {
   } else {
     desserts.push(req.body.inputname);
   }
-
   res.redirect("/home");
 });
 
@@ -110,6 +110,12 @@ app.post("/favrecipes/:favrecipe/delete", (req, res) => {
   res.redirect("/favrecipes")
 
 });
+
+app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
+
+  removeSelectedRecipe(req.params);
+
+})
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
@@ -144,6 +150,37 @@ function removeFavRecipe(favRecipe) {
   const index = favrecipe.indexOf(favRecipe);
   if (index > -1) { // only splice array when item is found
     favrecipe.splice(index, 1); // 2nd parameter means remove one item only
+  }
+
+}
+
+function removeSelectedRecipe(selectedRecipe) {
+
+  if(selectedRecipe.category == 'Side') {
+
+    const index = sides.indexOf(selectedRecipe.meal);
+    if (index > -1) { // only splice array when item is found
+      sides.splice(index, 1); // 2nd parameter means remove one item only
+    }
+
+  } 
+  
+  if(selectedRecipe.category == 'Main Dish') {
+
+    const index = mains.indexOf(selectedRecipe.meal);
+    if (index > -1) { // only splice array when item is found
+      mains.splice(index, 1); // 2nd parameter means remove one item only
+    }
+
+  } 
+  
+  if(selectedRecipe.category == 'Dessert') {
+
+    const index = desserts.indexOf(selectedRecipe.meal);
+    if (index > -1) { // only splice array when item is found
+      desserts.splice(index, 1); // 2nd parameter means remove one item only
+    }
+
   }
 
 }

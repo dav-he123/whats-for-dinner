@@ -114,7 +114,6 @@ body {
 }
 
 .buttonclear {
-  /* float: bottom; */
   transform: translateY(250%) translateX(370px);
   font-size: 16px;
   border-radius: 8px;
@@ -124,6 +123,17 @@ body {
   width: 80px;
 }
   
+.buttondeleterecipe {
+  transform: translateY(250%) translateX(270px);
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #0fb9b1;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 50px;
+  width: 80px;
+}
+
+
 .footer {
   position: fixed;
   left: 0;
