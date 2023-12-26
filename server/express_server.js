@@ -104,6 +104,13 @@ app.post("/home/addnewrecipe", (req, res) => {
   res.redirect("/home");
 });
 
+app.post("/favrecipes/:favrecipe/delete", (req, res) => {
+
+  removeFavRecipe(req.params.favrecipe);
+  res.redirect("/favrecipes")
+
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
@@ -130,3 +137,13 @@ const randSelect = function (mealtype) {
   }
   return selectedMeal;
 };
+
+
+function removeFavRecipe(favRecipe) {
+
+  const index = favrecipe.indexOf(favRecipe);
+  if (index > -1) { // only splice array when item is found
+    favrecipe.splice(index, 1); // 2nd parameter means remove one item only
+  }
+
+}

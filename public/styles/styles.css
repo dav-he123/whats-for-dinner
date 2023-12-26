@@ -181,13 +181,20 @@ form.addfavrecipeform input[type="submit"] {
 }
 
 #favrecipesdisplay {
-  font-size: 50px;
+  font-size: 35px;
   color: red;
   transform: translateX(5%);
-
 }
 
 .favouriteRecipeHeader {
   font-size: 80px;
   color: red;
+}
+
+.delete-primary {
+  background-color: white;
+  border-color: red;
+  color: red;
+  transform: translateX(50%) translateY(-20%);
+
 }

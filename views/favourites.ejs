@@ -25,11 +25,25 @@
       <h1 class="favouriteRecipeHeader"> 
         Favourite Recipes:
       </h1>
-      <div id="favrecipesdisplay">
+      <table id="favrecipesdisplay">
+        <tbody>
         <% for(const element of favrecipe) { %>
-        <p><%= element %></p>
+          <tr>
+            <td><%= element %></td>
+            <td>
+              <form method="POST" action="/favrecipes/<%=element%>/delete">
+                <button
+                  type="submit"
+                  class="delete-primary"
+                >
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
         <% } %>
-      </div>
+      </tbody>
+    </table>
     </section>
 
     <!-- Page-specific (main) content here -->
