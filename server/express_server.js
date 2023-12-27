@@ -70,7 +70,6 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  console.log(randMeals)
   res.render("main", randMeals);
 });
 
@@ -105,16 +104,12 @@ app.post("/home/addnewrecipe", (req, res) => {
 });
 
 app.post("/favrecipes/:favrecipe/delete", (req, res) => {
-
   removeFavRecipe(req.params.favrecipe);
   res.redirect("/favrecipes")
-
 });
 
 app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
-
   removeSelectedRecipe(req.params);
-
 })
 
 app.listen(PORT, () => {
@@ -146,41 +141,33 @@ const randSelect = function (mealtype) {
 
 
 function removeFavRecipe(favRecipe) {
-
   const index = favrecipe.indexOf(favRecipe);
   if (index > -1) { // only splice array when item is found
     favrecipe.splice(index, 1); // 2nd parameter means remove one item only
   }
-
 }
 
 function removeSelectedRecipe(selectedRecipe) {
 
   if(selectedRecipe.category == 'Side') {
-
     const index = sides.indexOf(selectedRecipe.meal);
     if (index > -1) { // only splice array when item is found
       sides.splice(index, 1); // 2nd parameter means remove one item only
     }
-
   } 
   
   if(selectedRecipe.category == 'Main Dish') {
-
     const index = mains.indexOf(selectedRecipe.meal);
     if (index > -1) { // only splice array when item is found
       mains.splice(index, 1); // 2nd parameter means remove one item only
     }
-
   } 
   
   if(selectedRecipe.category == 'Dessert') {
-
     const index = desserts.indexOf(selectedRecipe.meal);
     if (index > -1) { // only splice array when item is found
       desserts.splice(index, 1); // 2nd parameter means remove one item only
     }
-
   }
 
 }
