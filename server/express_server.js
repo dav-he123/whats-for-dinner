@@ -68,6 +68,19 @@ let randMeals = { meal: "", category: "" };
 
 let favrecipe = [];
 
+let users = {
+  userRandomID: {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur",
+  },
+  user2RandomID: {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk",
+  },
+}
+
 app.get("/favrecipes", (req, res) => {
 
   const templateVars = {
@@ -130,7 +143,6 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-  res.cookie('name', req.body.username);
   res.redirect("/home");      
 })
 
@@ -140,6 +152,11 @@ app.post("/logout", (req, res) => {
 })
 
 app.post("/register", (req, res) => {
+
+  const userId = makeid(5);
+  users[userId] = { id: userId, email: req.body.email, password: req.body.password }
+
+  res.cookie('name', users[userId].email);  
   res.redirect("/home");
 });  
 
@@ -170,7 +187,6 @@ const randSelect = function (mealtype) {
   return selectedMeal;
 };
 
-
 function removeFavRecipe(favRecipe) {
   const index = favrecipe.indexOf(favRecipe);
   if (index > -1) { // only splice array when item is found
@@ -200,5 +216,16 @@ function removeSelectedRecipe(selectedRecipe) {
       desserts.splice(index, 1); // 2nd parameter means remove one item only
     }
   }
+}
 
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
 }
