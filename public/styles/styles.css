@@ -212,3 +212,7 @@ form.addfavrecipeform input[type="submit"] {
   color: red;
   transform: translateX(53%) translateY(-320%);
 }
+
+.displayUsernameHeader{
+  color: white;
+}

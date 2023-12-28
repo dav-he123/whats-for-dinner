@@ -19,10 +19,19 @@
         <a class="active" href="/home">Home</a>
         <a href="/favrecipes">Favourites</a>
         <div>
-          <form class="form-inline" action="/login" method="POST">
-            <input type="text" name="username" placeholder="Username"/>
-            <input class="loginbutton" type="submit" value="Login">
-          </form>
+          <% if(!username) { %>
+            <form class="form-inline" action="/login" method="POST">
+              <input type="text" name="username" placeholder="Username"/>
+              <input class="loginbutton" type="submit" value="Login">
+            </form>
+          <% } else { %>
+            <p class="displayUsernameHeader">
+              Logged in as: <%= username %>  
+            </p>
+            <form class="form-inline" action="/logout" method="POST">
+              <input class="logoutbutton" type="submit" value="Logout">
+            </form>
+          <% } %>
         </div>
       </div>
     </div>
@@ -32,7 +41,7 @@
         <form class="submitform" action="/home/randomselection" method="POST">
           <p>What are you looking for?</p>
 
-          <% if(category == "") { %>
+          <% if(randMeals.category == "") { %>
 
           <div>
             <input
@@ -74,7 +83,7 @@
             <label for="entiremeal">Entire Meal</label><br />
           </div>
 
-          <% } else if(category == "Side") { %>
+          <% } else if(randMeals.category == "Side") { %>
 
           <div>
             <input
@@ -117,7 +126,7 @@
             <label for="entiremeal">Entire Meal</label><br />
           </div>
 
-          <% } else if(category == "Main Dish") { %>
+          <% } else if(randMeals.category == "Main Dish") { %>
 
           <div>
             <input
@@ -160,7 +169,7 @@
             <label for="entiremeal">Entire Meal</label><br />
           </div>
 
-          <% } else if(category == "Dessert") { %>
+          <% } else if(randMeals.category == "Dessert") { %>
 
           <div>
             <input
@@ -203,7 +212,7 @@
             <label for="entiremeal">Entire Meal</label><br />
           </div>
 
-          <% } else if (category == "Entire Meal") { %>
+          <% } else if (randMeals.category == "Entire Meal") { %>
 
           <div>
             <input
@@ -294,16 +303,16 @@
       </div>
       <div class="boxmealdish">
 
-        <% if(category == "" || meal == null || meal == "undefined with a side of undefined and undefined for dessert") { %>          
+        <% if(randMeals.category == "" || randMeals.meal == null || randMeals.meal == "undefined with a side of undefined and undefined for dessert") { %>          
        
           <div class="meal-dish">
             <img src="/images/meal-dish.png" alt="Meal Logo" />
           </div>
        
-        <% } else if(category === undefined) { %>
+        <% } else if(randMeals.category === undefined) { %>
 
           <h1 class="headercaption">What's for dinner?</h1>
-          <p class="captiondish"><%= meal %></p>
+          <p class="captiondish"><%= randMeals.meal %></p>
   
           <form
             action="/home/clearfavrecipe"
@@ -318,10 +327,10 @@
           >
           </form>
 
-        <% } else if(category == "Entire Meal") { %>
+        <% } else if(randMeals.category == "Entire Meal") { %>
 
           <h1 class="headercaption">What's for dinner?</h1>
-          <p class="captiondish"><%= meal %></p>
+          <p class="captiondish"><%= randMeals.meal %></p>
   
           <form
             action="/home/clearfavrecipe"
@@ -355,10 +364,10 @@
         <% } else { %>
 
           <h1 class="headercaption">What's for dinner?</h1>
-          <p class="captiondish"><%= meal %></p>  
+          <p class="captiondish"><%= randMeals.meal %></p>  
 
           <form
-          action="/home/deleterecipe/<%=category%>/<%=meal%>/delete"
+          action="/home/deleterecipe/<%=randMeals.category%>/<%=randMeals.meal%>/delete"
           method="POST"
           >
             <button class="buttondeleterecipe" type="submit" onclick="removeRecipeNotifiction()">Remove Recipe</button>

@@ -5,10 +5,13 @@
 const PORT = 8080;
 const express = require("express");
 const bodyParser = require("body-parser");
+var cookieParser = require('cookie-parser')
 const app = express();
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());  
+
 app.use(express.static("public"));
 
 let sides = [
@@ -70,7 +73,14 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.render("main", randMeals);
+
+  console.log(req.cookies.name)
+
+  const templateVars = {
+    username: req.cookies.name,
+    randMeals: randMeals
+  };
+  res.render("main", templateVars);
 });
 
 app.post("/home/randomselection", (req, res) => {
@@ -117,6 +127,12 @@ app.post("/login", (req, res) => {
   res.cookie('name', req.body.username);
   res.redirect("/home");      
 
+})
+
+app.post("/logout", (req, res) => {
+  console.log(req.cookies.name);
+  res.clearCookie('name');
+  console.log("AAA: " + req.cookies.name);
 })
 
 app.listen(PORT, () => {
