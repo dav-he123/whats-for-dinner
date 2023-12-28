@@ -112,6 +112,13 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
   removeSelectedRecipe(req.params);
 })
 
+app.post("/login", (req, res) => {
+
+  res.cookie('name', req.body.username);
+  res.redirect("/home");      
+
+})
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });

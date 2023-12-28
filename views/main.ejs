@@ -17,9 +17,13 @@
       <div class="header-right">
           <input class="addrecipe" type="button" value="Add Recipe" onclick="footerToggle()" />
         <a class="active" href="/home">Home</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
         <a href="/favrecipes">Favourites</a>
+        <div>
+          <form class="form-inline" action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username"/>
+            <input class="loginbutton" type="submit" value="Login">
+          </form>
+        </div>
       </div>
     </div>
 
@@ -289,10 +293,13 @@
         </form>
       </div>
       <div class="boxmealdish">
+
         <% if(category == "" || meal == null || meal == "undefined with a side of undefined and undefined for dessert") { %>          
+       
           <div class="meal-dish">
             <img src="/images/meal-dish.png" alt="Meal Logo" />
           </div>
+       
         <% } else if(category === undefined) { %>
 
           <h1 class="headercaption">What's for dinner?</h1>
@@ -308,7 +315,7 @@
             class="addfavrecipeform"
             action="/home/addfavrecipe"
             method="POST"  
-          >    
+          >
           </form>
 
         <% } else if(category == "Entire Meal") { %>
@@ -354,7 +361,7 @@
           action="/home/deleterecipe/<%=category%>/<%=meal%>/delete"
           method="POST"
           >
-            <button class="buttondeleterecipe" type="submit">Remove Recipe</button>
+            <button class="buttondeleterecipe" type="submit" onclick="removeRecipeNotifiction()">Remove Recipe</button>
           </form>
           
           <form
@@ -386,8 +393,10 @@
               </svg>
             </label>
           </div>
+
+          <p id="removeRecipeNotice"></p>
         </form>
-      <% } %> 
+      <% } %>  
       </div>
       <script>
         function favouriteClick() {
@@ -401,6 +410,11 @@
         function footerToggle() {
             $(".footer").toggle();
           }
+
+        function removeRecipeNotifiction() {
+          document.getElementById("removeRecipeNotice").innerHTML = "Recipe is removed!";
+        }
+
       </script>
     </div>
 

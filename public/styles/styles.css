@@ -133,7 +133,6 @@ body {
   width: 80px;
 }
 
-
 .footer {
   position: fixed;
   left: 0;
@@ -206,5 +205,10 @@ form.addfavrecipeform input[type="submit"] {
   border-color: red;
   color: red;
   transform: translateX(50%) translateY(-20%);
+}
 
+#removeRecipeNotice {
+  font-size: 25px;
+  color: red;
+  transform: translateX(53%) translateY(-320%);
 }
