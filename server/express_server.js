@@ -86,6 +86,10 @@ app.get("/home", (req, res) => {
   res.render("main", templateVars);
 });   
 
+app.get("/register", (req, res) => {
+  res.render("registration");
+});  
+
 app.post("/home/randomselection", (req, res) => {
   randMeals["category"] = req.body.full_course_meal_type;
   randMeals["meal"] = randSelect(req.body.full_course_meal_type);
@@ -134,6 +138,10 @@ app.post("/logout", (req, res) => {
   res.clearCookie('name');   
   res.redirect("/home");
 })
+
+app.post("/register", (req, res) => {
+  res.redirect("/home");
+});  
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
