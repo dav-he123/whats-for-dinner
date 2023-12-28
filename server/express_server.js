@@ -123,17 +123,13 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-
   res.cookie('name', req.body.username);
   res.redirect("/home");      
-
 })
 
 app.post("/logout", (req, res) => {
-  
   res.clearCookie('name');   
   res.redirect("/home");
-
 })
 
 app.listen(PORT, () => {

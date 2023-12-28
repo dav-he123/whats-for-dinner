@@ -214,5 +214,10 @@ form.addfavrecipeform input[type="submit"] {
 }
 
 .displayUsernameHeader{
+  transform: translateY(-45%);
   color: white;
+}
+
+.logoutbutton {
+  transform: translateX(280%) translateY(-210%);
 }
