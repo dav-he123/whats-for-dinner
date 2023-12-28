@@ -69,19 +69,22 @@ let randMeals = { meal: "", category: "" };
 let favrecipe = [];
 
 app.get("/favrecipes", (req, res) => {
-  res.render("favourites", { favrecipe: favrecipe });
+
+  const templateVars = {
+    username: req.cookies.name,
+    favrecipe: favrecipe
+  };
+  res.render("favourites", templateVars);
 });
 
 app.get("/home", (req, res) => {
-
-  console.log("AAAAA: " + req.cookies.name)
 
   const templateVars = {
     username: req.cookies.name,
     randMeals: randMeals
   };
   res.render("main", templateVars);
-});
+});   
 
 app.post("/home/randomselection", (req, res) => {
   randMeals["category"] = req.body.full_course_meal_type;
