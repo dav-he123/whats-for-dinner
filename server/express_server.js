@@ -74,7 +74,7 @@ app.get("/favrecipes", (req, res) => {
 
 app.get("/home", (req, res) => {
 
-  console.log(req.cookies.name)
+  console.log("AAAAA: " + req.cookies.name)
 
   const templateVars = {
     username: req.cookies.name,
@@ -130,9 +130,10 @@ app.post("/login", (req, res) => {
 })
 
 app.post("/logout", (req, res) => {
-  console.log(req.cookies.name);
-  res.clearCookie('name');
-  console.log("AAA: " + req.cookies.name);
+  
+  res.clearCookie('name');   
+  res.redirect("/home");
+
 })
 
 app.listen(PORT, () => {
