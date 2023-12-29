@@ -83,8 +83,8 @@ let users = {
 
 app.get("/favrecipes", (req, res) => {
 
-  const templateVars = {    
-    username: users[req.cookies.user_id].email,
+  const templateVars = {  
+    username: users[req.cookies.user_id],
     favrecipe: favrecipe
   };
   res.render("favourites", templateVars);
@@ -92,10 +92,10 @@ app.get("/favrecipes", (req, res) => {
 
 app.get("/home", (req, res) => {   
 
-  console.log(req.cookies)
+  // console.log(users);
 
   const templateVars = {
-    username: users[req.cookies.user_id].email,
+    username: users[req.cookies.user_id],
     randMeals: randMeals
   };
   res.render("main", templateVars);
@@ -155,9 +155,21 @@ app.post("/logout", (req, res) => {
 
 app.post("/register", (req, res) => {
   const userId = makeid(6);
-  users[userId] = { id: userId, email: req.body.email, password: req.body.password }
+  
+  if(emailUserLookup(req.body.email) || req.body.email == "" || req.body.password == "") {
+    res.status(400).send("400 Bad Request");
+  } else {
+    users[userId] = { id: userId, email: req.body.email, password: req.body.password }
+  }
+  
+  console.log(req.body);   
+  console.log(users);   
 
-  res.cookie('user_id', userId);
+  // if(req.body.email == "" || req.body.password == "") {
+  //   res.status(400).send("400 Bad Request");
+  // }
+
+  res.cookie('user_id', userId);   
   res.redirect("/home");
 });  
 
@@ -167,7 +179,7 @@ app.listen(PORT, () => {
 
 const randSelect = function (mealtype) {
   let selectedMeal;
-
+  
   if (mealtype == "Dessert") {
     selectedMeal = desserts[Math.floor(Math.random() * desserts.length)];
   } else if (mealtype == "Main Dish") {
@@ -176,12 +188,12 @@ const randSelect = function (mealtype) {
     selectedMeal = sides[Math.floor(Math.random() * sides.length)];
   } else if (mealtype == "Entire Meal") {
     selectedMeal =
-      mains[Math.floor(Math.random() * mains.length)] +
-      " with a side of " +
-      sides[Math.floor(Math.random() * sides.length)] +
-      " and " +
-      desserts[Math.floor(Math.random() * desserts.length)] +
-      " for dessert";
+    mains[Math.floor(Math.random() * mains.length)] +
+    " with a side of " +
+    sides[Math.floor(Math.random() * sides.length)] +
+    " and " +
+    desserts[Math.floor(Math.random() * desserts.length)] +
+    " for dessert";
   } else {
     selectedMeal = "Please select an option before proceeding!";
   }
@@ -196,7 +208,7 @@ function removeFavRecipe(favRecipe) {
 }
 
 function removeSelectedRecipe(selectedRecipe) {
-
+  
   if(selectedRecipe.category == 'Side') {
     const index = sides.indexOf(selectedRecipe.meal);
     if (index > -1) { // only splice array when item is found
@@ -229,4 +241,13 @@ function makeid(length) {
     counter += 1;
   }
   return result;
+}
+
+function emailUserLookup(inputEmail) {
+  for (const property in users) {
+    if(inputEmail == users[property].email) {
+      return true;
+    }
+  }
+  return false;
 }
