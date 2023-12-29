@@ -5,7 +5,7 @@
 const PORT = 8080;
 const express = require("express");
 const bodyParser = require("body-parser");
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 const app = express();
 
 app.set("view engine", "ejs");
@@ -82,7 +82,6 @@ let users = {
 }
 
 app.get("/favrecipes", (req, res) => {
-
   const templateVars = {  
     username: users[req.cookies.user_id],
     favrecipe: favrecipe
@@ -91,8 +90,6 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {   
-
-  // console.log(users);
 
   const templateVars = {
     username: users[req.cookies.user_id],
@@ -104,6 +101,10 @@ app.get("/home", (req, res) => {
 app.get("/register", (req, res) => {
   res.render("registration");
 });  
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 
 app.post("/home/randomselection", (req, res) => {
   randMeals["category"] = req.body.full_course_meal_type;
@@ -142,21 +143,21 @@ app.post("/favrecipes/:favrecipe/delete", (req, res) => {
 
 app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
   removeSelectedRecipe(req.params);
-})
+});
 
 app.post("/login", (req, res) => {
   res.redirect("/home");      
-})
+});
 
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');
   res.redirect("/home");
-})
+});
 
 app.post("/register", (req, res) => {
   const userId = makeid(6);
   
-  if(emailUserLookup(req.body.email) || req.body.email == "" || req.body.password == "") {
+  if(getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
     res.status(400).send("400 Bad Request");
   } else {
     users[userId] = { id: userId, email: req.body.email, password: req.body.password }
@@ -164,10 +165,6 @@ app.post("/register", (req, res) => {
   
   console.log(req.body);   
   console.log(users);   
-
-  // if(req.body.email == "" || req.body.password == "") {
-  //   res.status(400).send("400 Bad Request");
-  // }
 
   res.cookie('user_id', userId);   
   res.redirect("/home");
@@ -243,7 +240,7 @@ function makeid(length) {
   return result;
 }
 
-function emailUserLookup(inputEmail) {
+function getUserByEmail(inputEmail) {
   for (const property in users) {
     if(inputEmail == users[property].email) {
       return true;
