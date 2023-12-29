@@ -83,21 +83,23 @@ let users = {
 
 app.get("/favrecipes", (req, res) => {
 
-  const templateVars = {
-    username: req.cookies.name,
+  const templateVars = {    
+    username: users[req.cookies.user_id].email,
     favrecipe: favrecipe
   };
   res.render("favourites", templateVars);
 });
 
-app.get("/home", (req, res) => {
+app.get("/home", (req, res) => {   
+
+  console.log(req.cookies)
 
   const templateVars = {
-    username: req.cookies.name,
+    username: users[req.cookies.user_id].email,
     randMeals: randMeals
   };
   res.render("main", templateVars);
-});   
+}); 
 
 app.get("/register", (req, res) => {
   res.render("registration");
@@ -147,16 +149,15 @@ app.post("/login", (req, res) => {
 })
 
 app.post("/logout", (req, res) => {
-  res.clearCookie('name');   
+  res.clearCookie('user_id');
   res.redirect("/home");
 })
 
 app.post("/register", (req, res) => {
-
-  const userId = makeid(5);
+  const userId = makeid(6);
   users[userId] = { id: userId, email: req.body.email, password: req.body.password }
 
-  res.cookie('name', users[userId].email);  
+  res.cookie('user_id', userId);
   res.redirect("/home");
 });  
 
