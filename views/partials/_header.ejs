@@ -9,20 +9,18 @@
           <a class="active" href="/home">Home</a>
           <a href="/favrecipes">Favourites</a>
           <div>
-        
-
-
+  
             <% if(!username) { %>
               <a href="/login">Login</a>
               <a href="/register">Register</a>
             <% } else { %>
-                <p class="displayUsernameHeader">
-                  Logged in as: <%= username.email %>  
-                </p>  
-                <form class="form-inline" action="/logout" method="POST">
-                    <input class="logoutbutton" type="submit" value="Logout">
+              <p class="displayUsernameHeader">
+                Logged in as: <%= username.email %>  
+              </p> 
+              <form class="form-inline" action="/logout" method="POST">
+                  <input class="logoutbutton" type="submit" value="Logout">
               </form>
-            <% } %>
+            <% } %>    
         
           </div>
         </div>

@@ -160,9 +160,8 @@ app.post("/login", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');
-  // res.clearCookie('login_user_id');   
 
-  res.redirect("/home");
+  res.redirect("/login");
 });
 
 app.post("/register", (req, res) => {
