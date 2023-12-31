@@ -83,7 +83,7 @@ let users = {
 
 app.get("/favrecipes", (req, res) => {
   const templateVars = {  
-    loginUsername: req.cookies.login_user_id,
+    // loginUsername: req.cookies.login_user_id,
     username: users[req.cookies.user_id],
     favrecipe: favrecipe
   };
@@ -93,7 +93,7 @@ app.get("/favrecipes", (req, res) => {
 app.get("/home", (req, res) => {
 
   const templateVars = {
-    loginUsername: req.cookies.login_user_id,
+    // loginUsername: req.cookies.login_user_id,
     username: users[req.cookies.user_id],
     randMeals: randMeals
   };
@@ -150,7 +150,7 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 app.post("/login", (req, res) => {
 
   if(isUserAllowedToLogin(req.body.email, req.body.password)){
-    res.cookie('login_user_id', req.body.email);  
+    res.cookie('user_id', matchUserIdWithEmail(req.body.email));  
     res.redirect("/home"); 
   } else {
     res.status(403).send("403 Forbidden");
@@ -160,7 +160,7 @@ app.post("/login", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');
-  res.clearCookie('login_user_id');
+  // res.clearCookie('login_user_id');   
 
   res.redirect("/home");
 });
@@ -266,4 +266,12 @@ function isUserAllowedToLogin(email, password) {
     }   
   }
   return false;
+}
+
+function matchUserIdWithEmail(email) {
+  for (const property in users) {
+    if(email == users[property].email) {
+      return property;
+    }
+  }
 }
