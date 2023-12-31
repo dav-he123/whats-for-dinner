@@ -83,23 +83,25 @@ let users = {
 
 app.get("/favrecipes", (req, res) => {
   const templateVars = {  
+    loginUsername: req.cookies.login_user_id,
     username: users[req.cookies.user_id],
     favrecipe: favrecipe
   };
   res.render("favourites", templateVars);
 });
 
-app.get("/home", (req, res) => {   
+app.get("/home", (req, res) => {
 
   const templateVars = {
+    loginUsername: req.cookies.login_user_id,
     username: users[req.cookies.user_id],
     randMeals: randMeals
   };
   res.render("main", templateVars);
 }); 
 
-app.get("/register", (req, res) => {
-  res.render("registration");
+app.get("/register", (req, res) => { 
+  res.render("registration");    
 });  
 
 app.get("/login", (req, res) => {
@@ -146,11 +148,20 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.redirect("/home");      
-});
+
+  if(isUserAllowedToLogin(req.body.email, req.body.password)){
+    res.cookie('login_user_id', req.body.email);  
+    res.redirect("/home"); 
+  } else {
+    res.status(403).send("403 Forbidden");
+  }
+
+});  
 
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');
+  res.clearCookie('login_user_id');
+
   res.redirect("/home");
 });
 
@@ -162,10 +173,7 @@ app.post("/register", (req, res) => {
   } else {
     users[userId] = { id: userId, email: req.body.email, password: req.body.password }
   }
-  
-  console.log(req.body);   
-  console.log(users);   
-
+    
   res.cookie('user_id', userId);   
   res.redirect("/home");
 });  
@@ -205,7 +213,7 @@ function removeFavRecipe(favRecipe) {
 }
 
 function removeSelectedRecipe(selectedRecipe) {
-  
+
   if(selectedRecipe.category == 'Side') {
     const index = sides.indexOf(selectedRecipe.meal);
     if (index > -1) { // only splice array when item is found
@@ -226,6 +234,7 @@ function removeSelectedRecipe(selectedRecipe) {
       desserts.splice(index, 1); // 2nd parameter means remove one item only
     }
   }
+
 }
 
 function makeid(length) {
@@ -245,6 +254,16 @@ function getUserByEmail(inputEmail) {
     if(inputEmail == users[property].email) {
       return true;
     }
+  }
+  return false;
+}
+
+
+function isUserAllowedToLogin(email, password) {
+  for (const property in users) {
+    if(email == users[property].email && password == users[property].password) {
+      return true;
+    }   
   }
   return false;
 }
