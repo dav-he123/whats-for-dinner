@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <%- include('./partials/_header'); -%>
+
+    <section>
+      <h1 class="allRecipesHeader"> 
+        All Recipes:
+      </h1>
+      <table id="viewallrecipesdisplay">
+        <tbody>
+            <% for(const element of allrecipes) { %>
+                <tr>
+                    <td><%= element %></td>
+                </tr>
+            <% } %>
+        </tbody>
+      </table>
+        
+    </section>
+
+    <!-- Page-specific (main) content here -->
+    <main class="container"></main>
+  </body>
+</html>

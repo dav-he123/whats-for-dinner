@@ -83,7 +83,6 @@ let users = {
 
 app.get("/favrecipes", (req, res) => {
   const templateVars = {  
-    // loginUsername: req.cookies.login_user_id,
     username: users[req.cookies.user_id],
     favrecipe: favrecipe
   };
@@ -91,9 +90,7 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-
   const templateVars = {
-    // loginUsername: req.cookies.login_user_id,
     username: users[req.cookies.user_id],
     randMeals: randMeals
   };
@@ -106,6 +103,17 @@ app.get("/register", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login");
+});
+
+app.get("/viewrecipes", (req, res) => {
+
+  containsAllRecipes(sides, mains, desserts);
+
+  const templateVars = {
+    username: users[req.cookies.user_id],
+    allrecipes: containsAllRecipes(sides, mains, desserts),
+  };
+  res.render("view_recipes", templateVars);
 });
 
 app.post("/home/randomselection", (req, res) => {
@@ -148,14 +156,12 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-
   if(isUserAllowedToLogin(req.body.email, req.body.password)){
     res.cookie('user_id', matchUserIdWithEmail(req.body.email));  
     res.redirect("/home"); 
   } else {
     res.status(403).send("403 Forbidden");
   }
-
 });  
 
 app.post("/logout", (req, res) => {
@@ -273,4 +279,16 @@ function matchUserIdWithEmail(email) {
       return property;
     }
   }
+}
+
+function containsAllRecipes(sideRecipes, mainRecipes, dessertRecipes) {
+
+    let allRecipes = [];
+
+    sideRecipes.forEach((element) => allRecipes.push(element));
+    mainRecipes.forEach((element) => allRecipes.push(element));
+    dessertRecipes.forEach((element) => allRecipes.push(element));
+
+  return allRecipes;
+
 }

@@ -1,0 +1,18 @@
+CREATE TABLE sides (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE mains (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE desserts (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+
+
+
