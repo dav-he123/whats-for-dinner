@@ -106,18 +106,16 @@ app.get("/login", (req, res) => {
 
 app.get("/viewrecipes", (req, res) => {
 
-  containsAllRecipes(sides, mains, desserts);
-
   const templateVars = {
     username: users[req.cookies.user_id],
-    allrecipes: containsAllRecipes(sides, mains, desserts),
-  };
+    allrecipes: func.containsAllRecipes(sides, mains, desserts),  
+  };  
   res.render("view_recipes", templateVars);
 });
 
 app.post("/home/randomselection", (req, res) => {
   randMeals["category"] = req.body.full_course_meal_type;
-  randMeals["meal"] = randSelect(req.body.full_course_meal_type);
+  randMeals["meal"] = func.randSelect(req.body.full_course_meal_type);
   res.redirect("/home");
 });
 
@@ -146,17 +144,17 @@ app.post("/home/addnewrecipe", (req, res) => {
 });
 
 app.post("/favrecipes/:favrecipe/delete", (req, res) => {
-  removeFavRecipe(req.params.favrecipe);
+  func.removeFavRecipe(req.params.favrecipe);
   res.redirect("/favrecipes")
 });
 
 app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
-  removeSelectedRecipe(req.params);
+  func.removeSelectedRecipe(req.params);
 });
 
 app.post("/login", (req, res) => {
-  if(isUserAllowedToLogin(req.body.email, req.body.password)){
-    res.cookie('user_id', matchUserIdWithEmail(req.body.email));  
+  if(func.isUserAllowedToLogin(req.body.email, req.body.password)){
+    res.cookie('user_id', func.matchUserIdWithEmail(req.body.email));  
     res.redirect("/home"); 
   } else {
     res.status(403).send("403 Forbidden");
@@ -170,9 +168,9 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const userId = makeid(6);
+  const userId = func.makeid(6);
   
-  if(getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
+  if(func.getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
     res.status(400).send("400 Bad Request");
   } else {
     users[userId] = { id: userId, email: req.body.email, password: req.body.password }
@@ -186,108 +184,108 @@ app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
 
-const randSelect = function (mealtype) {
-  let selectedMeal;
+// const randSelect = function (mealtype) {
+//   let selectedMeal;
   
-  if (mealtype == "Dessert") {
-    selectedMeal = desserts[Math.floor(Math.random() * desserts.length)];
-  } else if (mealtype == "Main Dish") {
-    selectedMeal = mains[Math.floor(Math.random() * mains.length)];
-  } else if (mealtype == "Side") {
-    selectedMeal = sides[Math.floor(Math.random() * sides.length)];
-  } else if (mealtype == "Entire Meal") {
-    selectedMeal =
-    mains[Math.floor(Math.random() * mains.length)] +
-    " with a side of " +
-    sides[Math.floor(Math.random() * sides.length)] +
-    " and " +
-    desserts[Math.floor(Math.random() * desserts.length)] +
-    " for dessert";
-  } else {
-    selectedMeal = "Please select an option before proceeding!";
-  }
-  return selectedMeal;
-};
+//   if (mealtype == "Dessert") {
+//     selectedMeal = desserts[Math.floor(Math.random() * desserts.length)];
+//   } else if (mealtype == "Main Dish") {
+//     selectedMeal = mains[Math.floor(Math.random() * mains.length)];
+//   } else if (mealtype == "Side") {
+//     selectedMeal = sides[Math.floor(Math.random() * sides.length)];
+//   } else if (mealtype == "Entire Meal") {
+//     selectedMeal =
+//     mains[Math.floor(Math.random() * mains.length)] +
+//     " with a side of " +
+//     sides[Math.floor(Math.random() * sides.length)] +
+//     " and " +
+//     desserts[Math.floor(Math.random() * desserts.length)] +
+//     " for dessert";
+//   } else {
+//     selectedMeal = "Please select an option before proceeding!";
+//   }
+//   return selectedMeal;
+// };
 
-function removeFavRecipe(favRecipe) {
-  const index = favrecipe.indexOf(favRecipe);
-  if (index > -1) { // only splice array when item is found
-    favrecipe.splice(index, 1); // 2nd parameter means remove one item only
-  }
-}
+// function removeFavRecipe(favRecipe) {
+//   const index = favrecipe.indexOf(favRecipe);
+//   if (index > -1) { // only splice array when item is found
+//     favrecipe.splice(index, 1); // 2nd parameter means remove one item only
+//   }
+// }
 
-function removeSelectedRecipe(selectedRecipe) {
+// function removeSelectedRecipe(selectedRecipe) {
 
-  if(selectedRecipe.category == 'Side') {
-    const index = sides.indexOf(selectedRecipe.meal);
-    if (index > -1) { // only splice array when item is found
-      sides.splice(index, 1); // 2nd parameter means remove one item only
-    }
-  } 
+//   if(selectedRecipe.category == 'Side') {
+//     const index = sides.indexOf(selectedRecipe.meal);
+//     if (index > -1) { // only splice array when item is found
+//       sides.splice(index, 1); // 2nd parameter means remove one item only
+//     }
+//   } 
   
-  if(selectedRecipe.category == 'Main Dish') {
-    const index = mains.indexOf(selectedRecipe.meal);
-    if (index > -1) { // only splice array when item is found
-      mains.splice(index, 1); // 2nd parameter means remove one item only
-    }
-  } 
+//   if(selectedRecipe.category == 'Main Dish') {
+//     const index = mains.indexOf(selectedRecipe.meal);
+//     if (index > -1) { // only splice array when item is found
+//       mains.splice(index, 1); // 2nd parameter means remove one item only
+//     }
+//   } 
   
-  if(selectedRecipe.category == 'Dessert') {
-    const index = desserts.indexOf(selectedRecipe.meal);
-    if (index > -1) { // only splice array when item is found
-      desserts.splice(index, 1); // 2nd parameter means remove one item only
-    }
-  }
+//   if(selectedRecipe.category == 'Dessert') {
+//     const index = desserts.indexOf(selectedRecipe.meal);
+//     if (index > -1) { // only splice array when item is found
+//       desserts.splice(index, 1); // 2nd parameter means remove one item only
+//     }
+//   }
 
-}
+// }
 
-function makeid(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
+// function makeid(length) {
+//   let result = '';
+//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   const charactersLength = characters.length;
+//   let counter = 0;
+//   while (counter < length) {
+//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//     counter += 1;
+//   }
+//   return result;
+// }
 
-function getUserByEmail(inputEmail) {
-  for (const property in users) {
-    if(inputEmail == users[property].email) {
-      return true;
-    }
-  }
-  return false;
-}
+// function getUserByEmail(inputEmail) {
+//   for (const property in users) {
+//     if(inputEmail == users[property].email) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
 
 
-function isUserAllowedToLogin(email, password) {
-  for (const property in users) {
-    if(email == users[property].email && password == users[property].password) {
-      return true;
-    }   
-  }
-  return false;
-}
+// function isUserAllowedToLogin(email, password) {
+//   for (const property in users) {
+//     if(email == users[property].email && password == users[property].password) {
+//       return true;
+//     }   
+//   }
+//   return false;
+// }
 
-function matchUserIdWithEmail(email) {
-  for (const property in users) {
-    if(email == users[property].email) {
-      return property;
-    }
-  }
-}
+// function matchUserIdWithEmail(email) {
+//   for (const property in users) {
+//     if(email == users[property].email) {
+//       return property;
+//     }
+//   }
+// }
 
-function containsAllRecipes(sideRecipes, mainRecipes, dessertRecipes) {
+// function containsAllRecipes(sideRecipes, mainRecipes, dessertRecipes) {
 
-    let allRecipes = [];
+//     let allRecipes = [];
 
-    sideRecipes.forEach((element) => allRecipes.push(element));
-    mainRecipes.forEach((element) => allRecipes.push(element));
-    dessertRecipes.forEach((element) => allRecipes.push(element));
+//     sideRecipes.forEach((element) => allRecipes.push(element));
+//     mainRecipes.forEach((element) => allRecipes.push(element));
+//     dessertRecipes.forEach((element) => allRecipes.push(element));
 
-  return allRecipes;
+//   return allRecipes;
 
-}
+// }
