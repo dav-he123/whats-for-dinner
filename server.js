@@ -16,22 +16,8 @@ app.use(express.static("public"));
 
 const func = require("./db/index.js");
 
-const { sides, mains, desserts, favrecipe } = require('./db/index')
+const { sides, mains, desserts, favrecipe, randMeals, users } = require('./db/index');
 
-let randMeals = { meal: "", category: "" };
-
-let users = {
-  userRandomID: {
-    id: "userRandomID",
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur",
-  },
-  user2RandomID: {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk",
-  },
-}
 
 app.get("/favrecipes", (req, res) => {
   const templateVars = {  

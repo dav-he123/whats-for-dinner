@@ -42,6 +42,21 @@ const pool = new Pool({
     .catch(err => console.error('query error', err.stack));
 
     let favrecipe = [];
+
+    let randMeals = { meal: "", category: "" };
+
+    let users = {
+        userRandomID: {
+          id: "userRandomID",
+          email: "user@example.com",
+          password: "purple-monkey-dinosaur",
+        },
+        user2RandomID: {
+          id: "user2RandomID",
+          email: "user2@example.com",
+          password: "dishwasher-funk",
+        },
+      }
     
     const randSelect = function (mealtype) {
       let selectedMeal;
@@ -95,7 +110,6 @@ const pool = new Pool({
           desserts.splice(index, 1); // 2nd parameter means remove one item only
         }
       }
-    
     }
     
     function makeid(length) {
@@ -145,7 +159,6 @@ const pool = new Pool({
         dessertRecipes.forEach((element) => allRecipes.push(element));
     
       return allRecipes;
-    
     }
 
     module.exports = {
@@ -160,5 +173,7 @@ const pool = new Pool({
         sides,
         mains,
         desserts,
-        favrecipe
+        favrecipe,
+        randMeals,
+        users
     };
