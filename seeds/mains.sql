@@ -14,7 +14,7 @@ INSERT INTO mains (name)
   VALUES ('Butternut Squash Soup');
 INSERT INTO mains (name)
   VALUES ('BBQ Chicken Burgers');
-INSERT INTO mains (name)
+INSERT INTO mains (name)  
   VALUES ('Ramen');
 INSERT INTO mains (name)
   VALUES ('Empanadas');

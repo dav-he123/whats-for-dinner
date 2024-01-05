@@ -1,4 +1,10 @@
 INSERT INTO sides (name)
+  VALUES ('Miso Glazed Carrots');
+INSERT INTO sides (name)
+  VALUES ('Coleslaw');
+INSERT INTO sides (name)
+  VALUES ('Garden Salad');
+INSERT INTO sides (name)
   VALUES ('Crispy Potatoes');
 INSERT INTO sides (name)
   VALUES ('Sweet Potato Tots');

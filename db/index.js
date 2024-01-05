@@ -1,4 +1,48 @@
+const { Pool } = require('pg');
 
+const pool = new Pool({
+  database: 'whatsfordinner'
+});
+    
+    let sides = [];
+
+    pool.query(`
+    SELECT name FROM sides;
+    ` )
+    .then(res => {
+      for(const elem of res.rows) {
+        sides.push(elem.name);
+      }
+      return res.rows;
+    })
+    .catch(err => console.error('query error', err.stack));
+    
+    let mains = [];
+    
+    pool.query(`
+    SELECT name FROM mains;
+    `)
+    .then(res => {
+      for(const elem of res.rows) {
+        mains.push(elem.name);
+      }
+    })
+    .catch(err => console.error('query error', err.stack));
+    
+    let desserts = [];
+    
+    pool.query(`
+    SELECT name FROM desserts;
+    `)
+    .then(res => {
+      for(const elem of res.rows) {
+        desserts.push(elem.name);
+      }
+    })
+    .catch(err => console.error('query error', err.stack));
+
+    let favrecipe = [];
+    
     const randSelect = function (mealtype) {
       let selectedMeal;
       
@@ -75,7 +119,6 @@
       return false;
     }
     
-    
     function isUserAllowedToLogin(email, password) {
       for (const property in users) {
         if(email == users[property].email && password == users[property].password) {
@@ -113,5 +156,9 @@
         getUserByEmail,
         isUserAllowedToLogin,
         matchUserIdWithEmail,
-        containsAllRecipes
+        containsAllRecipes,
+        sides,
+        mains,
+        desserts,
+        favrecipe
     };

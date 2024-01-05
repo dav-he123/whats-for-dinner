@@ -16,56 +16,56 @@ app.use(express.static("public"));
 
 const func = require("./db/index.js");
 
-const { Pool } = require('pg');
+// const { Pool } = require('pg');
 
-const pool = new Pool({
-  database: 'whatsfordinner'
-});
-
-
-let sides = [];
-
-pool.query(`
-SELECT name FROM sides;
-` )
-.then(res => {
-  for(const elem of res.rows) {
-    sides.push(elem.name);
-  }
-  return res.rows;
-})
-.catch(err => console.error('query error', err.stack));
+// const pool = new Pool({
+//   database: 'whatsfordinner'
+// });
 
 
-let mains = [];
+// let sides = [];
 
-pool.query(`
-SELECT name FROM mains;
-`)
-.then(res => {
-  for(const elem of res.rows) {
-    mains.push(elem.name);
-  }
-})
-.catch(err => console.error('query error', err.stack));
+// pool.query(`
+// SELECT name FROM sides;
+// ` )
+// .then(res => {
+//   for(const elem of res.rows) {
+//     sides.push(elem.name);
+//   }
+//   return res.rows;
+// })
+// .catch(err => console.error('query error', err.stack));
 
 
-let desserts = [];
+// let mains = [];
 
-pool.query(`
-SELECT name FROM desserts;
-`)
-.then(res => {
-  for(const elem of res.rows) {
-    desserts.push(elem.name);
-  }
-})
-.catch(err => console.error('query error', err.stack));
+// pool.query(`
+// SELECT name FROM mains;
+// `)
+// .then(res => {
+//   for(const elem of res.rows) {
+//     mains.push(elem.name);
+//   }
+// })
+// .catch(err => console.error('query error', err.stack));
 
+
+// let desserts = [];
+
+// pool.query(`
+// SELECT name FROM desserts;
+// `)
+// .then(res => {
+//   for(const elem of res.rows) {
+//     desserts.push(elem.name);
+//   }
+// })
+// .catch(err => console.error('query error', err.stack));
+
+
+const { sides, mains, desserts, favrecipe } = require('./db/index')
 
 let randMeals = { meal: "", category: "" };
-
-let favrecipe = [];
 
 let users = {
   userRandomID: {
@@ -105,7 +105,6 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/viewrecipes", (req, res) => {
-
   const templateVars = {
     username: users[req.cookies.user_id],
     allrecipes: func.containsAllRecipes(sides, mains, desserts),  
@@ -144,6 +143,7 @@ app.post("/home/addnewrecipe", (req, res) => {
 });
 
 app.post("/favrecipes/:favrecipe/delete", (req, res) => {
+  console.log(req.params.favrecipe);
   func.removeFavRecipe(req.params.favrecipe);
   res.redirect("/favrecipes")
 });
