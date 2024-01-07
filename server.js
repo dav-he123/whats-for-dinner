@@ -36,10 +36,16 @@ app.get("/home", (req, res) => {
 }); 
 
 app.get("/register", (req, res) => { 
+  if(users[req.cookies.user_id]) {
+    res.redirect("/home");
+  }
   res.render("registration");    
 });  
 
 app.get("/login", (req, res) => {
+  if(users[req.cookies.user_id]) {
+    res.redirect("/home");
+  }
   res.render("login");
 });
 
@@ -113,7 +119,7 @@ app.post("/register", (req, res) => {
   } else {
     users[userId] = { id: userId, email: req.body.email, password: req.body.password }
   }
-    
+
   res.cookie('user_id', userId);   
   res.redirect("/home");
 });  
