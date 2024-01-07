@@ -18,13 +18,16 @@ const func = require("./db/index.js");
 
 const { sides, mains, desserts, favrecipe, randMeals, users } = require('./db/index');
 
-
 app.get("/favrecipes", (req, res) => {
-  const templateVars = {  
-    username: users[req.cookies.user_id],
-    favrecipe: favrecipe
-  };
-  res.render("favourites", templateVars);
+  if(!users[req.cookies.user_id]) {
+    res.redirect("login");
+  } else {
+    const templateVars = {  
+      username: users[req.cookies.user_id],
+      favrecipe: favrecipe
+    };
+    res.render("favourites", templateVars);
+  } 
 });
 
 app.get("/home", (req, res) => {
@@ -45,22 +48,31 @@ app.get("/register", (req, res) => {
 app.get("/login", (req, res) => {
   if(users[req.cookies.user_id]) {
     res.redirect("/home");
+  } else {
+    res.render("login");
   }
-  res.render("login");
 });
 
 app.get("/viewrecipes", (req, res) => {
-  const templateVars = {
-    username: users[req.cookies.user_id],
-    allrecipes: func.containsAllRecipes(sides, mains, desserts),  
-  };  
-  res.render("view_recipes", templateVars);
+  if(!users[req.cookies.user_id]) {
+    res.redirect("/login");
+  } else {
+    const templateVars = {
+      username: users[req.cookies.user_id],
+      allrecipes: func.containsAllRecipes(sides, mains, desserts),  
+    };  
+    res.render("view_recipes", templateVars);
+  }
 });
 
 app.post("/home/randomselection", (req, res) => {
-  randMeals["category"] = req.body.full_course_meal_type;
-  randMeals["meal"] = func.randSelect(req.body.full_course_meal_type);
-  res.redirect("/home");
+  if(!users[req.cookies.user_id]) {
+    res.send("Please login to use this functionality.")
+  } else {
+    randMeals["category"] = req.body.full_course_meal_type;
+    randMeals["meal"] = func.randSelect(req.body.full_course_meal_type);
+    res.redirect("/home");
+  }
 });
 
 app.post("/home/addfavrecipe", (req, res) => {
