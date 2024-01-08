@@ -41,8 +41,6 @@ const pool = new Pool({
     })
     .catch(err => console.error('query error', err.stack));
 
-    let favrecipe = [];
-
     let favRecipeObj = [];
 
     let randMeals = { meal: "", category: "" };
@@ -83,11 +81,15 @@ const pool = new Pool({
       return selectedMeal;
     };
     
-    function removeFavRecipe(favRecipe) {
-      const index = favrecipe.indexOf(favRecipe);
-      if (index > -1) { // only splice array when item is found
-        favrecipe.splice(index, 1); // 2nd parameter means remove one item only
-      }
+    function removeFavRecipe(favRecipe, cookieUserId) {
+    
+        let i = 0;
+        for (const elem of favRecipeObj) {
+            if(elem.cookieUserId == cookieUserId && elem.favouriteRecipe == favRecipe) {
+                favRecipeObj.splice(i, 1);
+            }        
+            i++;
+        }
     }
     
     function removeSelectedRecipe(selectedRecipe) {
@@ -184,7 +186,7 @@ const pool = new Pool({
           }
 
         return array;
-        
+
     }
 
     module.exports = {
@@ -201,7 +203,6 @@ const pool = new Pool({
         sides,
         mains,
         desserts,
-        favrecipe,
         randMeals,
         users,
         favRecipeObj

@@ -10,13 +10,13 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());  
+app.use(cookieParser());
 
 app.use(express.static("public"));
 
 const func = require("./db/index.js");
 
-const { sides, mains, desserts, favrecipe, randMeals, users, favRecipeObj } = require('./db/index');
+const { sides, mains, desserts, randMeals, users, favRecipeObj } = require('./db/index');
 
 app.get("/favrecipes", (req, res) => {
   if(!users[req.cookies.user_id]) {
@@ -100,8 +100,11 @@ app.post("/home/addnewrecipe", (req, res) => {
 });
 
 app.post("/favrecipes/:favrecipe/delete", (req, res) => {
-  func.removeFavRecipe(req.params.favrecipe);
-  res.redirect("/favrecipes")
+  // console.log(req.params);
+  // console.log(req.cookies.user_id);
+
+  func.removeFavRecipe(req.params.favrecipe, req.cookies.user_id);
+  res.redirect("/favrecipes");
 });
 
 app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
