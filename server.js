@@ -100,9 +100,6 @@ app.post("/home/addnewrecipe", (req, res) => {
 });
 
 app.post("/favrecipes/:favrecipe/delete", (req, res) => {
-  // console.log(req.params);
-  // console.log(req.cookies.user_id);
-
   func.removeFavRecipe(req.params.favrecipe, req.cookies.user_id);
   res.redirect("/favrecipes");
 });
