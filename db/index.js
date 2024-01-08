@@ -82,7 +82,6 @@ const pool = new Pool({
     };
     
     function removeFavRecipe(favRecipe, cookieUserId) {
-    
         let i = 0;
         for (const elem of favRecipeObj) {
             if(elem.cookieUserId == cookieUserId && elem.favouriteRecipe == favRecipe) {
@@ -137,9 +136,9 @@ const pool = new Pool({
       return false;
     }
     
-    function isUserAllowedToLogin(email, password) {
+    function emailLookUp(email) {
       for (const property in users) {
-        if(email == users[property].email && password == users[property].password) {
+        if(email == users[property].email) {
           return true;
         }   
       }
@@ -149,6 +148,7 @@ const pool = new Pool({
     function matchUserIdWithEmail(email) {
       for (const property in users) {
         if(email == users[property].email) {
+            // console.log(property)
           return property;
         }
       }
@@ -189,17 +189,26 @@ const pool = new Pool({
 
     }
 
+    function userObjLookUp(email) {
+        for (const property in users) {
+            if(email == users[property].email) {
+                return users[property];
+            }
+        }
+    }  
+
     module.exports = {
         randSelect,
         removeFavRecipe,
         removeSelectedRecipe,
         makeid,
         getUserByEmail,
-        isUserAllowedToLogin,
+        emailLookUp,
         matchUserIdWithEmail,
         containsAllRecipes,
         checkUserFavouriteRecipe,
         favRecipeForResectableUser,
+        userObjLookUp,
         sides,
         mains,
         desserts,

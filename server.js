@@ -7,6 +7,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 const app = express();
+const bcrypt = require("bcryptjs");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ const func = require("./db/index.js");
 const { sides, mains, desserts, randMeals, users, favRecipeObj } = require('./db/index');
 
 app.get("/favrecipes", (req, res) => {
+
   if(!users[req.cookies.user_id]) {
     res.redirect("login");
   } else {
@@ -109,29 +111,33 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  if(func.isUserAllowedToLogin(req.body.email, req.body.password)){
-    res.cookie('user_id', func.matchUserIdWithEmail(req.body.email));  
-    res.redirect("/home"); 
+  const user = func.userObjLookUp(req.body.email);
+
+  if(func.emailLookUp(req.body.email)) {
+    if(bcrypt.compareSync(req.body.password, user.password)) {
+      res.cookie('user_id', func.matchUserIdWithEmail(req.body.email));  
+      res.redirect("/home"); 
+    } else {
+      res.status(403).send("Check your password.");
+    }
   } else {
-    res.status(403).send("403 Forbidden");
+    res.status(403).send("Check your email.");
   }
 });  
 
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');
-
   res.redirect("/login");
 });
 
 app.post("/register", (req, res) => {
   const userId = func.makeid(6);
-  
   if(func.getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
     res.status(400).send("400 Bad Request");
   } else {
-    users[userId] = { id: userId, email: req.body.email, password: req.body.password }
+    users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
   }
-
+   
   res.cookie('user_id', userId);   
   res.redirect("/home");
 });  
