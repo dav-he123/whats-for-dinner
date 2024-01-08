@@ -3,11 +3,20 @@
 // Basic express setup:
 
 const PORT = 8080;
+var cookieSession = require('cookie-session')
 const express = require("express");
 const bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 const app = express();
 const bcrypt = require("bcryptjs");
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,12 +30,14 @@ const { sides, mains, desserts, randMeals, users, favRecipeObj } = require('./db
 
 app.get("/favrecipes", (req, res) => {
 
-  if(!users[req.cookies.user_id]) {
+  console.log(req.session);
+
+  if(!users[req.session.user_id]) {
     res.redirect("login");
   } else {
     const templateVars = {  
-      username: users[req.cookies.user_id],
-      favrecipe: func.favRecipeForResectableUser(favRecipeObj, req.cookies.user_id)
+      username: users[req.session.user_id],
+      favrecipe: func.favRecipeForResectableUser(favRecipeObj, req.session.user_id)
     };
     res.render("favourites", templateVars);
   } 
@@ -34,21 +45,21 @@ app.get("/favrecipes", (req, res) => {
 
 app.get("/home", (req, res) => {
   const templateVars = {
-    username: users[req.cookies.user_id],
+    username: users[req.session.user_id],
     randMeals: randMeals
   };
   res.render("main", templateVars);
 }); 
 
 app.get("/register", (req, res) => { 
-  if(users[req.cookies.user_id]) {
+  if(users[req.session.user_id]) {
     res.redirect("/home");
   }
   res.render("registration");    
 });  
 
 app.get("/login", (req, res) => {
-  if(users[req.cookies.user_id]) {
+  if(users[req.session.user_id]) {
     res.redirect("/home");
   } else {
     res.render("login");
@@ -56,11 +67,11 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/viewrecipes", (req, res) => {
-  if(!users[req.cookies.user_id]) {
+  if(!users[req.session.user_id]) {
     res.redirect("/login");
   } else {
     const templateVars = {
-      username: users[req.cookies.user_id],
+      username: users[req.session.user_id],
       allrecipes: func.containsAllRecipes(sides, mains, desserts),  
     };  
     res.render("view_recipes", templateVars);
@@ -68,7 +79,7 @@ app.get("/viewrecipes", (req, res) => {
 });
 
 app.post("/home/randomselection", (req, res) => {
-  if(!users[req.cookies.user_id]) {
+  if(!users[req.session.user_id]) {
     res.send("Please login to use this functionality.")
   } else {
     randMeals["category"] = req.body.full_course_meal_type;
@@ -79,7 +90,7 @@ app.post("/home/randomselection", (req, res) => {
 
 app.post("/home/addfavrecipe", (req, res) => {
 
-  func.checkUserFavouriteRecipe(randMeals["meal"], req.cookies.user_id);
+  func.checkUserFavouriteRecipe(randMeals["meal"], req.session.user_id);
   
   res.redirect("/home");
 });
@@ -102,7 +113,7 @@ app.post("/home/addnewrecipe", (req, res) => {
 });
 
 app.post("/favrecipes/:favrecipe/delete", (req, res) => {
-  func.removeFavRecipe(req.params.favrecipe, req.cookies.user_id);
+  func.removeFavRecipe(req.params.favrecipe, req.session.user_id);
   res.redirect("/favrecipes");
 });
 
@@ -116,7 +127,7 @@ app.post("/login", (req, res) => {
   if(func.emailLookUp(req.body.email)) {
     if(bcrypt.compareSync(req.body.password, user.password)) {
       res.cookie('user_id', func.matchUserIdWithEmail(req.body.email));  
-      res.redirect("/home"); 
+      res.redirect("/home");
     } else {
       res.status(403).send("Check your password.");
     }
@@ -126,7 +137,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie('user_id');
+  req.session.user_id = null;  
   res.redirect("/login");
 });
 
@@ -137,8 +148,10 @@ app.post("/register", (req, res) => {
   } else {
     users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
   }
-   
-  res.cookie('user_id', userId);   
+  
+  req.session.user_id = userId;
+
+  // res.cookie('user_id', userId);   
   res.redirect("/home");
 });  
 
