@@ -43,6 +43,8 @@ const pool = new Pool({
 
     let favrecipe = [];
 
+    let favRecipeObj = [];
+
     let randMeals = { meal: "", category: "" };
 
     let users = {
@@ -159,6 +161,30 @@ const pool = new Pool({
         dessertRecipes.forEach((element) => allRecipes.push(element));
     
       return allRecipes;
+    }   
+
+
+    function checkUserFavouriteRecipe(favouriteRecipe, cookieUserId) {
+        
+        if (favRecipeObj.filter(item => item.favouriteRecipe == favouriteRecipe).length == 0){
+            favRecipeObj.push({ favouriteRecipe: favouriteRecipe, cookieUserId: cookieUserId });
+        }
+
+        return favRecipeObj;
+    }
+
+    function favRecipeForResectableUser(favrecipes, cookieUserId) {
+
+        let array = [];
+
+        for (const elem of favrecipes) {
+            if(elem.cookieUserId == cookieUserId) {
+                array.push(elem.favouriteRecipe)
+            }
+          }
+
+        return array;
+        
     }
 
     module.exports = {
@@ -170,10 +196,13 @@ const pool = new Pool({
         isUserAllowedToLogin,
         matchUserIdWithEmail,
         containsAllRecipes,
+        checkUserFavouriteRecipe,
+        favRecipeForResectableUser,
         sides,
         mains,
         desserts,
         favrecipe,
         randMeals,
-        users
+        users,
+        favRecipeObj
     };

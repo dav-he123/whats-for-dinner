@@ -16,7 +16,7 @@ app.use(express.static("public"));
 
 const func = require("./db/index.js");
 
-const { sides, mains, desserts, favrecipe, randMeals, users } = require('./db/index');
+const { sides, mains, desserts, favrecipe, randMeals, users, favRecipeObj } = require('./db/index');
 
 app.get("/favrecipes", (req, res) => {
   if(!users[req.cookies.user_id]) {
@@ -24,7 +24,7 @@ app.get("/favrecipes", (req, res) => {
   } else {
     const templateVars = {  
       username: users[req.cookies.user_id],
-      favrecipe: favrecipe
+      favrecipe: func.favRecipeForResectableUser(favRecipeObj, req.cookies.user_id)
     };
     res.render("favourites", templateVars);
   } 
@@ -76,9 +76,9 @@ app.post("/home/randomselection", (req, res) => {
 });
 
 app.post("/home/addfavrecipe", (req, res) => {
-  if (!favrecipe.includes(randMeals["meal"])) {
-    favrecipe.push(randMeals["meal"]);
-  }
+
+  func.checkUserFavouriteRecipe(randMeals["meal"], req.cookies.user_id);
+  
   res.redirect("/home");
 });
 
