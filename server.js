@@ -123,7 +123,7 @@ app.post("/login", (req, res) => {
   } else {
     res.status(403).send("Check your email.");
   }
-});  
+});
 
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id');

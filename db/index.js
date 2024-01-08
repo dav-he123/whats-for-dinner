@@ -148,7 +148,6 @@ const pool = new Pool({
     function matchUserIdWithEmail(email) {
       for (const property in users) {
         if(email == users[property].email) {
-            // console.log(property)
           return property;
         }
       }
