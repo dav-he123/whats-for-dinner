@@ -30,12 +30,10 @@ const { sides, mains, desserts, randMeals, users, favRecipeObj } = require('./db
 
 app.get("/favrecipes", (req, res) => {
 
-  console.log(req.session);
-
   if(!users[req.session.user_id]) {
     res.redirect("login");
   } else {
-    const templateVars = {  
+    const templateVars = {
       username: users[req.session.user_id],
       favrecipe: func.favRecipeForResectableUser(favRecipeObj, req.session.user_id)
     };
@@ -126,7 +124,7 @@ app.post("/login", (req, res) => {
 
   if(func.emailLookUp(req.body.email)) {
     if(bcrypt.compareSync(req.body.password, user.password)) {
-      res.cookie('user_id', func.matchUserIdWithEmail(req.body.email));  
+      req.session.user_id = func.matchUserIdWithEmail(req.body.email); 
       res.redirect("/home");
     } else {
       res.status(403).send("Check your password.");
@@ -149,9 +147,8 @@ app.post("/register", (req, res) => {
     users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
   }
   
-  req.session.user_id = userId;
-
-  // res.cookie('user_id', userId);   
+  req.session.user_id = userId;  
+   
   res.redirect("/home");
 });  
 
