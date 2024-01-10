@@ -194,7 +194,49 @@ const pool = new Pool({
                 return users[property];
             }
         }
-    }  
+    } 
+
+    const addUser = function (user) {
+      
+
+      console.log("hello world");
+
+      // console.log(user);
+      // alert('test');
+    
+        var test = (`  
+        DO
+        $do$
+        BEGIN
+        IF NOT EXISTS (SELECT 1 FROM users WHERE email = '${user.email}') THEN
+            
+            INSERT INTO users (userid, email, password) 
+            VALUES ('${user.id}', '${user.email}', '${user.password}');
+                
+        END IF;  
+        END;      
+        $do$  
+        `);
+          
+        console.log(test);
+                
+      return pool
+      .query(test)
+      .then((result) => {    
+    
+        console.log(result.row);    
+
+        // if(result.row[0] == 0) {
+        //   res.send("FUCK");
+        // }
+
+        return result.rows[0]; 
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
+    };
 
     module.exports = {
         randSelect,
@@ -208,6 +250,7 @@ const pool = new Pool({
         checkUserFavouriteRecipe,
         favRecipeForResectableUser,
         userObjLookUp,
+        addUser,
         sides,
         mains,
         desserts,

@@ -28,6 +28,7 @@ const func = require("./db/index.js");
 
 const { sides, mains, desserts, randMeals, users, favRecipeObj } = require('./db/index');
 
+
 app.get("/favrecipes", (req, res) => {
 
   if(!users[req.session.user_id]) {
@@ -144,12 +145,28 @@ app.post("/register", (req, res) => {
   if(func.getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
     res.status(400).send("400 Bad Request");
   } else {
+
+    const user = req.body;
+    user.password = bcrypt.hashSync(req.body.password, 10);
+    user.id = userId;
+
     users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
+
+    func.addUser(user)
+    .then((user) => {
+      if (!user) {
+        return res.send({ error: "error" });
+      }
+      res.send("🤗");
+    })
+    .catch((e) => {
+      res.send(e);
+    });
   }
   
   req.session.user_id = userId;  
-   
   res.redirect("/home");
+
 });  
 
 app.listen(PORT, () => {
