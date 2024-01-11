@@ -199,23 +199,20 @@ const pool = new Pool({
     const addUser = function (user) {
       
 
-      console.log("hello world");
-
-      // console.log(user);
-      // alert('test');
+      console.log("hello world");  
     
         var test = (`  
         DO
         $do$
         BEGIN
         IF NOT EXISTS (SELECT 1 FROM users WHERE email = '${user.email}') THEN
-            
+        
             INSERT INTO users (userid, email, password) 
             VALUES ('${user.id}', '${user.email}', '${user.password}');
-                
-        END IF;  
-        END;      
-        $do$  
+
+        END IF;
+        END
+        $do$
         `);
           
         console.log(test);
