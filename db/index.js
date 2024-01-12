@@ -58,6 +58,8 @@ const pool = new Pool({
         },
       }
     
+      let userAAAA = {};
+    
     const randSelect = function (mealtype) {
       let selectedMeal;
       
@@ -137,20 +139,47 @@ const pool = new Pool({
     }
     
     function emailLookUp(email) {
-      for (const property in users) {
-        if(email == users[property].email) {
+
+      var test = (`  
+        SELECT * FROM users WHERE email = '${email}'
+      `);  
+
+      return pool
+      .query(test)
+      .then((result) => {    
+
+        if(email == result.rows[0].email) {
           return true;
         }   
-      }
-      return false;
+        return false;
+
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+        
     }
     
     function matchUserIdWithEmail(email) {
-      for (const property in users) {
-        if(email == users[property].email) {
-          return property;
-        }
-      }
+
+      var test = (`  
+        SELECT * FROM users WHERE email = '${email}'
+      `);  
+
+      return pool
+      .query(test)
+      .then((result) => {    
+
+        if(email == result.rows[0].email) {
+          return true;
+        }   
+        return false;
+
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  
     }
     
     function containsAllRecipes(sideRecipes, mainRecipes, dessertRecipes) {
@@ -163,7 +192,6 @@ const pool = new Pool({
     
       return allRecipes;
     }   
-
 
     function checkUserFavouriteRecipe(favouriteRecipe, cookieUserId) {
         
@@ -189,45 +217,51 @@ const pool = new Pool({
     }
 
     function userObjLookUp(email) {
-        for (const property in users) {
-            if(email == users[property].email) {
-                return users[property];
-            }
-        }
-    } 
 
-    const addUser = function (user) {
-      
+      var test = (`  
+        SELECT * FROM users WHERE email = '${email}'
+      `);  
 
-      console.log("hello world");  
-    
-        var test = (`  
-        DO
-        $do$
-        BEGIN
-        IF NOT EXISTS (SELECT 1 FROM users WHERE email = '${user.email}') THEN
-        
-            INSERT INTO users (userid, email, password) 
-            VALUES ('${user.id}', '${user.email}', '${user.password}');
-
-        END IF;
-        END
-        $do$
-        `);
-          
-        console.log(test);
-                
       return pool
       .query(test)
       .then((result) => {    
-    
-        console.log(result.row);    
 
-        // if(result.row[0] == 0) {
-        //   res.send("FUCK");
-        // }
+        if(email == result.rows[0].email) {
 
+          userAAAA[result.rows[0].userid] =  result.rows[0];
+          
+          return result.rows[0];
+        }
+
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+            
+    } 
+
+    const addUser = function (user) {
+          
+        var test = (`  
+          DO
+          $do$
+          BEGIN
+          IF NOT EXISTS (SELECT 1 FROM users WHERE email = '${user.email}') THEN
+              
+              INSERT INTO users (userid, email, password) 
+              VALUES ('${user.id}', '${user.email}', '${user.password}');
+                  
+          END IF;
+          END;      
+          $do$ 
+        `);  
+      
+      return pool
+      .query(test)
+      .then((result) => {    
+        
         return result.rows[0]; 
+
       })
       .catch((err) => {
         console.log(err.message);
@@ -253,5 +287,6 @@ const pool = new Pool({
         desserts,
         randMeals,
         users,
-        favRecipeObj
+        favRecipeObj,
+        userAAAA
     };

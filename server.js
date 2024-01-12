@@ -26,7 +26,7 @@ app.use(express.static("public"));
 
 const func = require("./db/index.js");
 
-const { sides, mains, desserts, randMeals, users, favRecipeObj } = require('./db/index');
+const { sides, mains, desserts, randMeals, users, favRecipeObj, userAAAA } = require('./db/index');
 
 
 app.get("/favrecipes", (req, res) => {
@@ -43,8 +43,9 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
+
   const templateVars = {
-    username: users[req.session.user_id],
+    username: userAAAA[req.session.user_id],
     randMeals: randMeals
   };
   res.render("main", templateVars);
@@ -72,7 +73,7 @@ app.get("/viewrecipes", (req, res) => {
     const templateVars = {
       username: users[req.session.user_id],
       allrecipes: func.containsAllRecipes(sides, mains, desserts),  
-    };  
+    };
     res.render("view_recipes", templateVars);
   }
 });
@@ -88,9 +89,7 @@ app.post("/home/randomselection", (req, res) => {
 });
 
 app.post("/home/addfavrecipe", (req, res) => {
-
   func.checkUserFavouriteRecipe(randMeals["meal"], req.session.user_id);
-  
   res.redirect("/home");
 });
 
@@ -121,18 +120,27 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const user = func.userObjLookUp(req.body.email);
 
-  if(func.emailLookUp(req.body.email)) {
-    if(bcrypt.compareSync(req.body.password, user.password)) {
-      req.session.user_id = func.matchUserIdWithEmail(req.body.email); 
-      res.redirect("/home");
-    } else {
-      res.status(403).send("Check your password.");
-    }
-  } else {
-    res.status(403).send("Check your email.");
-  }
+  func.userObjLookUp(req.body.email)
+    .then((result) => {
+
+      if(result.email == req.body.email) {
+        if(bcrypt.compareSync(req.body.password, result.password)) {
+          // console.log(result);  
+          // console.log(req.session);
+          // req.session.user_id = result.userid;
+       
+          res.redirect("/home");
+        } else {
+          res.status(403).send("Check your password.");
+        }
+      } else {
+        res.status(403).send("Check your email.");
+      }
+  
+    })
+    .catch((e) => res.send(e));
+
 });
 
 app.post("/logout", (req, res) => {
@@ -141,6 +149,9 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+
+  console.log("REGISTER", req.body.email);
+
   const userId = func.makeid(6);
   if(func.getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
     res.status(400).send("400 Bad Request");
@@ -150,7 +161,7 @@ app.post("/register", (req, res) => {
     user.password = bcrypt.hashSync(req.body.password, 10);
     user.id = userId;
 
-    users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
+    // users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
 
     func.addUser(user)
     .then((user) => {
