@@ -147,13 +147,6 @@ const pool = new Pool({
         console.log(err.message);
       });
         
-
-      // for (const property in users) {
-      //   if(inputEmail == users[property].email) {
-      //     return true;
-      //   }
-      // }
-      // return false;
     }
     
     function emailLookUp(email) {

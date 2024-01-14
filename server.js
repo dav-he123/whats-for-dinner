@@ -151,7 +151,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-
+    
   const userId = func.makeid(6);
 
   func.getUserByEmail(req.body.email, req.body.password)
@@ -166,7 +166,7 @@ app.post("/register", (req, res) => {
         const user = req.body;
         user.password = bcrypt.hashSync(req.body.password, 10);
         user.id = userId;
-    
+              
         func.addUser(user)
         .then((user) => {
           if (!user) {
@@ -179,7 +179,7 @@ app.post("/register", (req, res) => {
         });
 
         req.session.user_id = userId;  
-                
+
         res.redirect("/home");
         
       }
@@ -187,7 +187,6 @@ app.post("/register", (req, res) => {
     .catch((e) => res.send(e));
   
 });
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
