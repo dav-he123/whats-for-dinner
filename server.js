@@ -79,7 +79,8 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/home", (req, res) => { 
-  
+  console.log("USERS", users);
+
   const templateVars = {
     username: users[req.session.user_id],
     randMeals: randMeals
@@ -87,11 +88,11 @@ app.get("/home", (req, res) => {
   res.render("main", templateVars);
 }); 
 
-app.get("/register", (req, res) => { 
-  if(users[req.session.user_id]) {
+app.get("/register", (req, res) => {     
+  if(users[req.session.user_id]) {  
     res.redirect("/home");
   }
-  res.render("registration");    
+  res.render("registration");      
 });  
 
 app.get("/login", (req, res) => {
@@ -159,16 +160,17 @@ app.post("/login", (req, res) => {
 
   func.userObjLookUp(req.body.email)
     .then((result) => {
-
+      if(result == "Email not found") {
+        res.send(result);
+      } else {
         if(bcrypt.compareSync(req.body.password, result.password)) {
- 
-          req.session.user_id = result.userid;
-       
-          res.redirect("/home");
-        } else {
-          res.status(403).send("Check your password.");
-        }
-      })
+            req.session.user_id = result.userid;
+            res.redirect("/home");
+          } else {
+            res.status(403).send("Check your password.");
+          }
+      }
+    })
     .catch((e) => res.send(e));
 
 });

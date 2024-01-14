@@ -40,9 +40,9 @@ const pool = new Pool({
       }
     })
     .catch(err => console.error('query error', err.stack));
-
+    
     let favRecipeObj = [];
-
+    
     let randMeals = { meal: "", category: "" };
     
     let users = {}; 
@@ -211,67 +211,63 @@ const pool = new Pool({
           }
 
         return array;
-
     }
 
+
+
     function userObjLookUp(email) {
-
-
-      // console.log("AAAA: ", email);
-
 
       var test = (`  
         SELECT * FROM users WHERE email = '${email}'
       `);  
 
-      // console.log(test);
-
-
       return pool
       .query(test)
       .then((result) => {    
   
-        if(result.rows[0].email) {
+        if(result.rows[0]) {
 
           users[result.rows[0].userid] =  result.rows[0];
-          // console.log("USERS", users); 
           return result.rows[0];
-          
-        }
 
+        } else {
+
+          return "Email not found";
+
+        }
       })
       .catch((err) => {
         console.log(err.message);
-      });
-            
+      });            
     } 
+
 
     const addUser = function (user) {
       
       var test = (`
-        INSERT INTO users(userid, email, password)
-          SELECT '${user.id}', '${user.email}', '${user.password}'
-        WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='${user.email}')
-        RETURNING *;  
+      INSERT INTO users(userid, email, password)
+      SELECT '${user.id}', '${user.email}', '${user.password}'
+      WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='${user.email}')
+      RETURNING *;  
       `)
-  
+      
       return pool
       .query(test)
       .then((result) => {    
-
+        
         return result.rows[0];
-
+        
       })
       .catch((err) => {
         console.log(err.message);
       });
-
+      
     };
-
+    
     module.exports = {
-        randSelect,
-        removeFavRecipe,
-        removeSelectedRecipe,
+      randSelect,
+      removeFavRecipe,
+      removeSelectedRecipe,
         makeid,
         getUserByEmail,
         emailLookUp,
