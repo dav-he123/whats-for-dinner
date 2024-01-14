@@ -39,9 +39,46 @@ app.get("/favrecipes", (req, res) => {
     };
     res.render("favourites", templateVars);
   } 
+});               
+
+app.post("/register", (req, res) => {
+
+  const userId = func.makeid(6);
+
+  func.getUserByEmail(req.body.email, req.body.password)
+    .then((lookingUpEmail) => {
+
+      if(!lookingUpEmail) {   
+        
+        res.status(400).send("400 Bad Request"); 
+        
+      } else {
+        
+        const user = req.body;
+        user.password = bcrypt.hashSync(req.body.password, 10);
+        user.id = userId;
+              
+          func.addUser(user)
+          .then((user) => {
+
+            if (!user) {  
+              return res.send({ error: "error" });
+            } else {
+              console.log(user);
+              users[user.userid] = user;
+              console.log("REGISTER", users);   
+            }   
+            
+            req.session.user_id = userId;  
+            res.redirect("/home");
+            res.send("🤗");
+          
+          }).catch((e) => { res.send(e); });
+      }
+  })
 });
 
-app.get("/home", (req, res) => {  
+app.get("/home", (req, res) => { 
   
   const templateVars = {
     username: users[req.session.user_id],
@@ -123,21 +160,15 @@ app.post("/login", (req, res) => {
   func.userObjLookUp(req.body.email)
     .then((result) => {
 
-      if(result.email == req.body.email) {
         if(bcrypt.compareSync(req.body.password, result.password)) {
-          // console.log(result);  
-          // console.log(req.session);
-          // req.session.user_id = result.userid;
+ 
+          req.session.user_id = result.userid;
        
           res.redirect("/home");
         } else {
           res.status(403).send("Check your password.");
         }
-      } else {
-        res.status(403).send("Check your email.");
-      }
-  
-    })
+      })
     .catch((e) => res.send(e));
 
 });
@@ -145,44 +176,6 @@ app.post("/login", (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.user_id = null;  
   res.redirect("/login");
-});
-
-app.post("/register", (req, res) => {
-
-  const userId = func.makeid(6);
-
-  func.getUserByEmail(req.body.email, req.body.password)
-    .then((lookingUpEmail) => {
-
-      if(!lookingUpEmail) {    
-      
-        res.status(400).send("400 Bad Request"); 
-      
-      } else {
-  
-        const user = req.body;
-        user.password = bcrypt.hashSync(req.body.password, 10);
-        user.id = userId;
-              
-        func.addUser(user)
-        .then((user) => {
-          if (!user) {
-            return res.send({ error: "error" });
-          }
-          res.send("🤗");
-        })
-        .catch((e) => {
-          res.send(e); 
-        });
-
-        req.session.user_id = userId;  
-
-        res.redirect("/home");
-        
-      }
-    })
-    .catch((e) => res.send(e));
-  
 });
 
 app.listen(PORT, () => {

@@ -216,19 +216,27 @@ const pool = new Pool({
 
     function userObjLookUp(email) {
 
+
+      // console.log("AAAA: ", email);
+
+
       var test = (`  
         SELECT * FROM users WHERE email = '${email}'
       `);  
 
+      // console.log(test);
+
+
       return pool
       .query(test)
       .then((result) => {    
-
-        if(email == result.rows[0].email) {
+  
+        if(result.rows[0].email) {
 
           users[result.rows[0].userid] =  result.rows[0];
-          
+          // console.log("USERS", users); 
           return result.rows[0];
+          
         }
 
       })
@@ -246,15 +254,13 @@ const pool = new Pool({
         WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='${user.email}')
         RETURNING *;  
       `)
-
+  
       return pool
       .query(test)
       .then((result) => {    
-        
-          var testing = users[result.rows[0].userid] = result.rows[0];
 
-          return testing;
-    
+        return result.rows[0];
+
       })
       .catch((err) => {
         console.log(err.message);
@@ -275,10 +281,10 @@ const pool = new Pool({
         favRecipeForResectableUser,
         userObjLookUp,
         addUser,
+        users,
         sides,
         mains,
         desserts,
         randMeals,
         favRecipeObj,
-        users,
     };
