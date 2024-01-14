@@ -129,13 +129,31 @@ const pool = new Pool({
       return result;
     }
     
-    function getUserByEmail(inputEmail) {
-      for (const property in users) {
-        if(inputEmail == users[property].email) {
-          return true;
+    function getUserByEmail(inputEmail, inputPassword) {
+             
+      var emails = (`  
+        SELECT * FROM users WHERE email = '${inputEmail}'
+      `);  
+
+      return pool
+      .query(emails)
+      .then((result) => {   
+        if (result.rows[0] != null || inputEmail == "" || inputPassword == ""){
+          return false;
         }
-      }
-      return false;
+        return true; 
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+        
+
+      // for (const property in users) {
+      //   if(inputEmail == users[property].email) {
+      //     return true;
+      //   }
+      // }
+      // return false;
     }
     
     function emailLookUp(email) {
@@ -241,27 +259,24 @@ const pool = new Pool({
     } 
 
     const addUser = function (user) {
-          
-        var test = (`  
-          DO
-          $do$
-          BEGIN
-          IF NOT EXISTS (SELECT 1 FROM users WHERE email = '${user.email}') THEN
-              
-              INSERT INTO users (userid, email, password) 
-              VALUES ('${user.id}', '${user.email}', '${user.password}');
-                  
-          END IF;
-          END;      
-          $do$ 
-        `);  
       
+      var test = (`
+      
+          INSERT INTO users(userid, email, password)
+            SELECT '${user.id}', '${user.email}', '${user.password}'
+          WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='${user.email}')
+          RETURNING *;
+      
+      `)
+
       return pool
       .query(test)
       .then((result) => {    
         
-        return result.rows[0]; 
+          var testing = userAAAA[result.rows[0].userid] = result.rows[0];
 
+          return testing;
+    
       })
       .catch((err) => {
         console.log(err.message);
@@ -288,5 +303,5 @@ const pool = new Pool({
         randMeals,
         users,
         favRecipeObj,
-        userAAAA
+        userAAAA,
     };

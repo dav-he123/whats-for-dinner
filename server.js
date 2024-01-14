@@ -28,7 +28,6 @@ const func = require("./db/index.js");
 
 const { sides, mains, desserts, randMeals, users, favRecipeObj, userAAAA } = require('./db/index');
 
-
 app.get("/favrecipes", (req, res) => {
 
   if(!users[req.session.user_id]) {
@@ -42,8 +41,11 @@ app.get("/favrecipes", (req, res) => {
   } 
 });
 
-app.get("/home", (req, res) => {
-
+app.get("/home", (req, res) => {  
+    
+  // console.log("HOME", req.session);
+  console.log("HOME USER", userAAAA);
+  
   const templateVars = {
     username: userAAAA[req.session.user_id],
     randMeals: randMeals
@@ -150,35 +152,46 @@ app.post("/logout", (req, res) => {
 
 app.post("/register", (req, res) => {
 
-  console.log("REGISTER", req.body.email);
-
   const userId = func.makeid(6);
-  if(func.getUserByEmail(req.body.email) || req.body.email == "" || req.body.password == "") {
-    res.status(400).send("400 Bad Request");
-  } else {
 
-    const user = req.body;
-    user.password = bcrypt.hashSync(req.body.password, 10);
-    user.id = userId;
+  func.getUserByEmail(req.body.email, req.body.password)
+    .then((lookingUpEmail) => {
 
-    // users[userId] = { id: userId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10)}
-
-    func.addUser(user)
-    .then((user) => {
-      if (!user) {
-        return res.send({ error: "error" });
-      }
-      res.send("🤗");
-    })
-    .catch((e) => {
-      res.send(e);
-    });
-  }
+      if(!lookingUpEmail) {    
+      
+        res.status(400).send("400 Bad Request"); 
+      
+      } else {
   
-  req.session.user_id = userId;  
-  res.redirect("/home");
+        const user = req.body;
+        user.password = bcrypt.hashSync(req.body.password, 10);
+        user.id = userId;
+    
+        func.addUser(user)
+        .then((user) => {
+          if (!user) {
+            return res.send({ error: "error" });
+          }
+          res.send("🤗");
+        })
+        .catch((e) => {
+          res.send(e); 
+        });
 
-});  
+        // console.log("GOGGINS", userId);   
+        req.session.user_id = userId;
+        // console.log(req.session);   
+
+        // console.log("DAVID", user);
+        
+        res.redirect("/home");
+        
+      }
+    })
+    .catch((e) => res.send(e));
+  
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
