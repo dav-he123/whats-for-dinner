@@ -26,7 +26,7 @@ app.use(express.static("public"));
 
 const func = require("./db/index.js");
 
-const { sides, mains, desserts, randMeals, users, favRecipeObj, userAAAA } = require('./db/index');
+const { sides, mains, desserts, randMeals, favRecipeObj, users } = require('./db/index');
 
 app.get("/favrecipes", (req, res) => {
 
@@ -42,12 +42,9 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {  
-
-  // console.log("HOME", req.session);
-  console.log("HOME USER", userAAAA);
   
   const templateVars = {
-    username: userAAAA[req.session.user_id],
+    username: users[req.session.user_id],
     randMeals: randMeals
   };
   res.render("main", templateVars);
@@ -151,7 +148,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-    
+
   const userId = func.makeid(6);
 
   func.getUserByEmail(req.body.email, req.body.password)

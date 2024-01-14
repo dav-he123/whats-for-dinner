@@ -44,21 +44,8 @@ const pool = new Pool({
     let favRecipeObj = [];
 
     let randMeals = { meal: "", category: "" };
-
-    let users = {
-        userRandomID: {
-          id: "userRandomID",
-          email: "user@example.com",
-          password: "purple-monkey-dinosaur",
-        },
-        user2RandomID: {
-          id: "user2RandomID",
-          email: "user2@example.com",
-          password: "dishwasher-funk",
-        },
-      }
     
-      let userAAAA = {};
+    let users = {}; 
     
     const randSelect = function (mealtype) {
       let selectedMeal;
@@ -239,7 +226,7 @@ const pool = new Pool({
 
         if(email == result.rows[0].email) {
 
-          userAAAA[result.rows[0].userid] =  result.rows[0];
+          users[result.rows[0].userid] =  result.rows[0];
           
           return result.rows[0];
         }
@@ -254,19 +241,17 @@ const pool = new Pool({
     const addUser = function (user) {
       
       var test = (`
-      
-          INSERT INTO users(userid, email, password)
-            SELECT '${user.id}', '${user.email}', '${user.password}'
-          WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='${user.email}')
-          RETURNING *;
-      
+        INSERT INTO users(userid, email, password)
+          SELECT '${user.id}', '${user.email}', '${user.password}'
+        WHERE NOT EXISTS (SELECT 1 FROM users WHERE email='${user.email}')
+        RETURNING *;  
       `)
 
       return pool
       .query(test)
       .then((result) => {    
         
-          var testing = userAAAA[result.rows[0].userid] = result.rows[0];
+          var testing = users[result.rows[0].userid] = result.rows[0];
 
           return testing;
     
@@ -294,7 +279,6 @@ const pool = new Pool({
         mains,
         desserts,
         randMeals,
-        users,
         favRecipeObj,
-        userAAAA,
+        users,
     };
