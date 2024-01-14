@@ -42,7 +42,7 @@ app.get("/favrecipes", (req, res) => {
 });
 
 app.get("/home", (req, res) => {  
-    
+
   // console.log("HOME", req.session);
   console.log("HOME USER", userAAAA);
   
@@ -178,12 +178,8 @@ app.post("/register", (req, res) => {
           res.send(e); 
         });
 
-        // console.log("GOGGINS", userId);   
-        req.session.user_id = userId;
-        // console.log(req.session);   
-
-        // console.log("DAVID", user);
-        
+        req.session.user_id = userId;  
+                
         res.redirect("/home");
         
       }
