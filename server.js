@@ -157,7 +157,6 @@ app.post("/home/deleterecipe/:category/:meal/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-
   func.userObjLookUp(req.body.email)
     .then((result) => {
       if(result == "Email not found") {
@@ -172,7 +171,6 @@ app.post("/login", (req, res) => {
       }
     })
     .catch((e) => res.send(e));
-
 });
 
 app.post("/logout", (req, res) => {

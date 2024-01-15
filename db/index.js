@@ -75,7 +75,7 @@ const pool = new Pool({
         for (const elem of favRecipeObj) {
             if(elem.cookieUserId == cookieUserId && elem.favouriteRecipe == favRecipe) {
                 favRecipeObj.splice(i, 1);
-            }        
+            }   
             i++;
         }
     }
@@ -136,54 +136,8 @@ const pool = new Pool({
         
     }
     
-    function emailLookUp(email) {
-
-      var test = (`  
-        SELECT * FROM users WHERE email = '${email}'
-      `);  
-
-      return pool
-      .query(test)
-      .then((result) => {    
-
-        if(email == result.rows[0].email) {
-          return true;
-        }   
-        return false;
-
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-        
-    }
-    
-    function matchUserIdWithEmail(email) {
-
-      var test = (`  
-        SELECT * FROM users WHERE email = '${email}'
-      `);  
-
-      return pool
-      .query(test)
-      .then((result) => {    
-
-        if(email == result.rows[0].email) {
-          return true;
-        }   
-        return false;
-
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  
-    }
-    
     function containsAllRecipes(sideRecipes, mainRecipes, dessertRecipes) {
-    
         let allRecipes = [];
-    
         sideRecipes.forEach((element) => allRecipes.push(element));
         mainRecipes.forEach((element) => allRecipes.push(element));
         dessertRecipes.forEach((element) => allRecipes.push(element));
@@ -192,27 +146,21 @@ const pool = new Pool({
     }   
 
     function checkUserFavouriteRecipe(favouriteRecipe, cookieUserId) {
-        
         if (favRecipeObj.filter(item => item.favouriteRecipe == favouriteRecipe).length == 0){
             favRecipeObj.push({ favouriteRecipe: favouriteRecipe, cookieUserId: cookieUserId });
         }
-
         return favRecipeObj;
     }
 
     function favRecipeForResectableUser(favrecipes, cookieUserId) {
-
         let array = [];
-
         for (const elem of favrecipes) {
             if(elem.cookieUserId == cookieUserId) {
                 array.push(elem.favouriteRecipe)
             }
           }
-
         return array;
     }
-
 
 
     function userObjLookUp(email) {
@@ -241,7 +189,6 @@ const pool = new Pool({
       });            
     } 
 
-
     const addUser = function (user) {
       
       var test = (`
@@ -265,13 +212,11 @@ const pool = new Pool({
     };
     
     module.exports = {
-      randSelect,
-      removeFavRecipe,
-      removeSelectedRecipe,
+        randSelect,
+        removeFavRecipe,
+        removeSelectedRecipe,
         makeid,
         getUserByEmail,
-        emailLookUp,
-        matchUserIdWithEmail,
         containsAllRecipes,
         checkUserFavouriteRecipe,
         favRecipeForResectableUser,
